@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 引入 文件 -->
+    <link rel="stylesheet" href="./leafletjs/leaflet.css" />
+    <script src="./leafletjs/leaflet.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/viewer.min.js"></script>
+    <link rel="stylesheet" href="./css/viewer.min.css" />
+    <title>那些我去过的城市</title>
+    <!-- 增加地图高度 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100vh;
+        }
+        .imgBox {
+            width: 270px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        .imgroll {
+            background-color: #000;
+            width: 31%;
+            height: 70px;
+            margin: 5px 5px 0 0;
+            overflow: hidden;
+        }
+        .imgs {
+            width: 150%;
+            right: 25%;
+            position: relative;
+        }
+        .mark-box {
+            width: 270px;
+        }
+        .mark-date {
+            display: block;
+            padding-top: 10px;
+        }
+        .mark-content {
+            display: block;
+            padding: 10px 0;
+        }
+        .leaflet-popup-content {
+            margin-right: 10px;
+        }
+        .leaflet-popup-pane .leaflet-popup {
+            animation: mymove 1s ease-in;
+        }
+        @keyframes mymove {
+            0% {
+                opacity: 0;
+            }
+            30% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+    <body>
+        <!-- 创建一个 地图的div id 必须有 但是自定义 -->
+        <div id="map"></div>
+    </body>
+
+    <script>
+        let data = {
+            rows: [
+                {
+                    country: "中国",
+                    city: "湖南省长沙市",
+                    times: "2",
+                    date: "2020年12月~现在",
+                    imgs: [
+                        "changsha (1).jpg",
+                        "changsha (2).jpg",
+                        "changsha (3).jpg",
+                        "changsha (4).jpg",
+                        "changsha (5).jpg",
+                        "changsha (6).jpg",
+                        "changsha (7).jpg",
+                        "changsha (8).jpg",
+                        "changsha (9).jpg",
+                    ],
+                    remark: "出差长沙银行",
+                    longitude: "112.960467",
+                    latitude: "28.170500",
+                },
+                {
+                    country: "中国",
+                    city: "湖北省武汉市",
+                    times: "2",
+                    date: "2019年3月-现在",
+                    imgs: [
+                        "moqi (1).jpg",
+                        "moqi (2).jpg",
+                        "moqi (3).jpg",
+                        "moqi (4).jpg",
+                        "moqi (5).jpg",
+                        "moqi (6).jpg",
+                        "moqi (7).jpg",
+                        "moqi (8).jpg",
+                        "moqi (9).jpg",
+                    ],
+                    remark: "偶滴老噶，就住在介个屯。",
+                    longitude: "114.444353",
+                    latitude: "30.499235",
+                },
+                {
+                    country: "中国",
+                    city: "黑龙江省嫩江市嫩江农场",
+                    times: "2",
+                    date: "2017年7月",
+                    imgs: [
+                        "moqi (1).jpg",
+                        "moqi (2).jpg",
+                        "moqi (3).jpg",
+                        "moqi (4).jpg",
+                        "moqi (5).jpg",
+                        "moqi (6).jpg",
+                        "moqi (7).jpg",
+                        "moqi (8).jpg",
+                        "moqi (9).jpg",
+                    ],
+                    remark: "偶滴老噶，就住在介个屯。",
+                    longitude: "125.655082",
+                    latitude: "49.131340",
+                },
+                {
+                    country: "中国",
+                    city: "内蒙古呼伦贝尔市莫力达瓦达斡尔族自治旗",
+                    times: "2",
+                    date: "forever",
+                    imgs: [
+                        "moqi (1).jpg",
+                        "moqi (2).jpg",
+                        "moqi (3).jpg",
+                        "moqi (4).jpg",
+                        "moqi (5).jpg",
+                        "moqi (6).jpg",
+                        "moqi (7).jpg",
+                        "moqi (8).jpg",
+                        "moqi (9).jpg",
+                    ],
+                    remark: "偶滴老噶，就住在介个屯。",
+                    longitude: "124.520518",
+                    latitude: "48.478603",
+                },
+                {
+                    country: "中国",
+                    city: "浙江省绍兴市",
+                    times: "2",
+                    date: "2018年12月",
+                    imgs: [
+                        "shaoxing (1).jpg",
+                        "shaoxing (2).jpg",
+                        "shaoxing (3).jpg",
+                        "shaoxing (4).jpg",
+                        "shaoxing (5).jpg",
+                        "shaoxing (6).jpg",
+                        "shaoxing (7).jpg",
+                        "shaoxing (8).jpg",
+                        "shaoxing (9).jpg",
+                    ],
+                    remark: "第一次现场观看排球比赛，很幸运的和kim合影，没有和古德地合影略显遗憾。",
+                    longitude: "120.582112",
+                    latitude: "29.997117",
+                },
+                {
+                    country: "中国",
+                    city: "浙江省宁波市",
+                    times: "2",
+                    date: "2018~2019",
+                    imgs: ["sichuan.jpg", "xian_0.jpg", "sichuan.jpg", "sichuan.jpg"],
+                    remark: "工作半年，北仑区中国女排的福地",
+                    longitude: "121.649792",
+                    latitude: "29.868388",
+                },
+                {
+                    country: "中国",
+                    city: "浙江省杭州市",
+                    times: "2",
+                    date: "2018~2019",
+                    imgs: ["sichuan.jpg", "xian_0.jpg", "sichuan.jpg", "sichuan.jpg"],
+                    remark: "工作半年，北仑区中国女排的福地",
+                    longitude: "120.168457",
+                    latitude: "30.2448319",
+                },
+                {
+                    country: "中国",
+                    city: "黑龙江哈尔滨市",
+                    times: "2",
+                    date: "2014~2018",
+                    imgs: ["sichuan.jpg", "xian_0.jpg", "sichuan.jpg", "sichuan.jpg"],
+                    remark: "读书四年，一座冰天雪地的城市",
+                    longitude: "126.652295",
+                    latitude: "45.820148",
+                },
+                {
+                    country: "中国",
+                    city: "黑龙江大庆市",
+                    times: "2",
+                    date: "2014~2018",
+                    imgs: ["sichuan.jpg", "xian_0.jpg", "sichuan.jpg", "sichuan.jpg"],
+                    remark: "读书四年，一座冰天雪地的城市",
+                    longitude: "125.111847",
+                    latitude: "46.570261",
+                },
+                {
+                    country: "中国",
+                    city: "黑龙江齐齐哈尔市",
+                    times: "2",
+                    date: "2014~2018",
+                    imgs: ["sichuan.jpg", "xian_0.jpg", "sichuan.jpg", "sichuan.jpg"],
+                    remark: "读书四年，一座冰天雪地的城市",
+                    longitude: "123.972361",
+                    latitude: "47.355213",
+                },
+                {
+                    country: "中国",
+                    city: "黑龙江哈尔滨市",
+                    times: "2",
+                    date: "2014~2018",
+                    imgs: [
+                        "dajuyuan (1).jpg",
+                        "dajuyuan (2).jpg",
+                        "dajuyuan (3).jpg",
+                        "dajuyuan (4).jpg",
+                        "dajuyuan (5).jpg",
+                        "dajuyuan (6).jpg",
+                        "dajuyuan (7).jpg",
+                        "dajuyuan (8).jpg",
+                        "dajuyuan (9).jpg",
+                    ],
+                    remark: "哈尔滨大剧院，一次穷游。",
+                    longitude: "126.586945",
+                    latitude: "45.811372",
+                },
+                {
+                    country: "中国",
+                    city: "北京市",
+                    times: "2",
+                    date: "2014~2016",
+                    imgs: [
+                        "beijing (1).jpg",
+                        "beijing (2).jpg",
+                        "beijing (3).jpg",
+                        "beijing (4).jpg",
+                    ],
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "116.399286",
+                    latitude: "39.907454",
+                },
+                {
+                    country: "中国",
+                    city: "江苏省南京市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "118.797912",
+                    latitude: "32.0366021",
+                },
+                {
+                    country: "中国",
+                    city: "江苏省苏州市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "120.679771",
+                    latitude: "31.317376",
+                },
+                {
+                    country: "中国",
+                    city: "辽宁省沈阳市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "123.458197",
+                    latitude: "41.738576",
+                },
+                {
+                    country: "中国",
+                    city: "辽宁省大连市",
+                    times: "2",
+                    date: "2020年1月",
+                    imgs: [
+                        "dalian (1).jpg",
+                        "dalian (2).jpg",
+                        "dalian (3).jpg",
+                        "dalian (4).jpg",
+                        "dalian (5).jpg",
+                    ],
+                    remark: "发现王国、黄金海岸",
+                    longitude: "121.636736",
+                    latitude: "38.921786",
+                },
+                {
+                    country: "中国",
+                    city: "吉林省吉林市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "126.577106",
+                    latitude: "43.853653",
+                },
+                {
+                    country: "中国",
+                    city: "黑龙江省七台河市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "131.012685",
+                    latitude: "45.767389",
+                },
+                {
+                    country: "中国",
+                    city: "吉林市长白山风景区",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "128.058634",
+                    latitude: "42.000853",
+                },
+                {
+                    country: "中国",
+                    city: "吉林市长春市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "125.307332",
+                    latitude: "43.854441",
+                },
+                {
+                    country: "中国",
+                    city: "内蒙古兴安盟乌兰浩特市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "122.094361",
+                    latitude: "46.069535",
+                },
+                {
+                    country: "中国",
+                    city: "上海市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "121.501922",
+                    latitude: "31.2180865",
+                },
+                {
+                    country: "中国",
+                    city: "浙江省嘉兴市",
+                    times: "2",
+                    date: "2020年1月",
+                    remark: "北京工作，第一份工作，北漂两年",
+                    longitude: "120.783628",
+                    latitude: "30.746185",
+                },
+            ],
+        };
+
+        //到 mapbox 官网注册并创建下面的access token都是免费的，不过有5w次的浏览限制
+        var url =
+            "http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}";
+        // 地图中心点，陕西
+        var centerPoint = [35.63452, 109.132287];
+
+        // 创建地图
+        var map = L.map("map", {
+            center: centerPoint,
+            zoom: 5, //当前图层
+            minZoom: 4, //缩放到最小图层
+            maxZoom: 7, //放大到最大图层
+            attributionControl: !1,
+        });
+
+        // 创建图层
+        var mapServerUrl =
+            "http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}";
+        L.tileLayer(mapServerUrl, {
+            opacity: 1,
+            zIndex: 0,
+        }).addTo(map);
+
+        // 自定义版权信息（简单的html字符串）
+        var attr = L.control.attribution();
+        attr.addAttribution("旅游地图相册Demo —— 那些我去过的城市");
+        // attr.addAttribution('<a href="http://giscafer.com" target="_blank">@giscafer</a>');
+        attr.addTo(map);
+        var footIcon = L.icon({
+            iconUrl: "./imgs/icon/zuji1.png",
+            iconSize: [24, 24],
+            iconAnchor: [10, 10],
+        });
+        function drawFootPoint(data) {
+            for (var i = 0; i < data.length; i++) {
+                var p = data[i];
+                var imgs = p.imgs;
+                var mapContent = `<div class="mark-box">
+                    <h4 class="mark-title">${p.country}-${p.city}</h4>
+                    <span class="mark-date">${p.date}</span>
+                    <span class="mark-content">${p.remark}</span>
+                    <div class='imgBox'>
+                    `;
+                imgs &&
+                    imgs.forEach((item, index) => {
+                        mapContent += `<div class="imgroll">`;
+                        mapContent += `<img data-originals='imgs/picture/${item}' class='imgs img-${
+                            index + 1
+                        }'src="imgs/picture/${item}"   alt="图片${index + 1}" />`;
+                        mapContent += `</div>`;
+                    });
+                //style="background-image:url('imgs/picture/${item}')"
+                //data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==
+                mapContent += `</div></div>`;
+                L.marker([p.latitude, p.longitude], { icon: footIcon })
+                    .addTo(map)
+                    .bindPopup(mapContent);
+            }
+        }
+        // 获取数据
+        // $.get("./data/data.json", function (result) {
+        //     console.log(result);
+        drawFootPoint(data.rows);
+        // });
+
+        map.on("popupopen", function (e) {
+            setTimeout(() => {
+                let imgBox = document.getElementsByClassName("imgBox")[0];
+                var viewerMap = new Viewer(imgBox, {
+                    url: "data-originals",
+                    show: function () {
+                        // 动态加载图片后，更新实例
+                        viewerMap.update();
+                    },
+                });
+                let imgs = document.querySelectorAll(".imgs");
+                imgs.forEach((item) => {
+                    item.style.top = -(item.height - 70) / 2 + "px";
+                });
+            }, 300);
+        });
+
+        // map.on("mousemove", function (e) {
+        //     // console.log(
+        //     //     `经纬度：`,
+        //     //     `longitude: "${e.latlng.lng.toString().slice(0, 10)}",
+        //     //         latitude: "${e.latlng.lat.toString().slice(0, 10)}",`,
+        //     // );
+        //     document.getElementById("info").innerHTML =
+        //         /* innerHTML 属性设置或返回表格行的开始和结束标签之间的 HTML  */
+        //         // e.point is the x, y coordinates of the mousemove event relative
+        //         // to the top-left corner of the map
+        //         JSON.stringify(e.containerPoint) +
+        //         "<br />" +
+        //         // e.lngLat is the longitude, latitude geographical position of the event
+        //         JSON.stringify(
+        //             e.latlng,
+        //         ); /* JSON.stringify() 方法可以将任意的 JavaScript 值序列化成 JSON 字符串 */
+        // });
+        // //初始化 地图
+        // var leafletMap = L.map("mapDiv").setView([41, 123], 5);
+        // //将图层加载到地图上，并设置最大的聚焦还有map样式
+        // L.tileLayer(url, {
+        //     maxZoom: 18,
+        //     id: "mapbox.streets",
+        // }).addTo(leafletMap);
+        // //增加一个marker ，地图上的标记，并绑定了一个popup，默认打开
+        // L.marker([41, 123])
+        //     .addTo(leafletMap)
+        //     .bindPopup("<b>Hello world!</b><br />I am a popup.")
+        //     .openPopup()
+        // //增加一个圈，设置圆心、半径、样式
+        // L.circle([41, 123], 500, {
+        //     color: "red",
+        //     fillColor: "#f03",
+        //     fillOpacity: 0.5,
+        // })
+        //     .addTo(leafletMap)
+        //     .bindPopup("I am a circle.");
+        // //增加多边形
+        // L.polygon([
+        //     [41, 123],
+        //     [39, 121],
+        //     [41, 126],
+        // ])
+        //     .addTo(leafletMap)
+        //     .bindPopup("I am a polygon.");
+        // //为点击地图的事件 增加popup
+        // var popup = L.popup();
+        // function onMapClick(e) {
+        //     popup
+        //         .setLatLng(e.latlng)
+        //         .setContent("You clicked the map at " + e.latlng.toString())
+        //         .openOn(leafletMap);
+        // }
+        // leafletMap.on("click", onMapClick);
+    </script>
+</html>

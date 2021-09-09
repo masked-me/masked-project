@@ -1,0 +1,23 @@
+{
+    "name": "closure",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "folktale": "2.3.2",
+        "lodash": "^4.17.21",
+        "ts": "^0.2.2",
+        "typescript": "^4.2.3",
+        "html-webpack-plugin": "4",
+        "webpack": "4.32.2",
+        "webpack-cli": "3.3.2",
+        "webpack-dev-server": "3.5.1"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

@@ -1,0 +1,14 @@
+{
+    "users": [
+        {
+            "name": "张三",
+            "age": 18,
+            "url": "src/day-02/data.json"
+        },
+        {
+            "name": "李四",
+            "age": 29,
+            "url": "src/day-02/data1.json"
+        }
+    ]
+}

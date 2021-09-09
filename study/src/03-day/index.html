@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button id="btn">add</button>
+        <div id="outer"></div>
+        <input type="button" value="createElement" id="btn_1" /><input
+            type="button"
+            value="createDocumentFragment"
+            id="btn_2"
+        />
+    </body>
+    <script>
+        function $(id) {
+            return document.getElementById(id);
+        }
+        var outer = $("outer");
+        var inner = $("inner");
+        $("btn_1").onclick = function () {
+            var div = document.createElement("div");
+            div.innerHTML = "<p>测试createElement</p>";
+            document.body.appendChild(div);
+            setTimeout(function () {
+                outer.appendChild(div);
+                setTimeout(function () {
+                    outer.removeChild(div);
+                }, 1000);
+            }, 1000);
+        };
+        $("btn_2").onclick = function () {
+            var p = document.createElement("p");
+            var c = document.createElement("span");
+            p.innerHTML = "测试DocumentFragment";
+            var fragment = document.createDocumentFragment();
+            fragment.appendChild(p);
+            fragment.appendChild(c);
+            var fragment = document.createDocumentFragment();
+            var ret = fragment.appendChild(document.createElement("div"));
+            ret.innerHTML = "by innerHTML ";
+            fragment.innerHTML = "<p>测试DocumentFragment</p>";
+            fragment.innerHTML = "<span>测试DocumentFragment</span>";
+            document.body.appendChild(fragment);
+            setTimeout(function () {
+                outer.appendChild(fragment); //报错，因为此时文档内部已经能够不存在fragment了
+                setTimeout(function () {
+                    outer.removeChild(fragment);
+                }, 1000);
+            }, 1000);
+        };
+    </script>
+</html>
