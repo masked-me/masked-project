@@ -16,10 +16,10 @@ const serve = http.createServer(async (req, res) => {
     }
 })
 
-serve.listen(8081)
+serve.listen(3000)
 
 
-console.log('服务运行至,http://localhost:8081/')
+console.log('服务运行至,http://localhost:3000/')
 
 
 

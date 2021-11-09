@@ -1,17 +1,8 @@
-const path = require('path');
 const fs = require('fs');
 const url = require('url');
 const ejs = require('ejs')
-const mimeType = require('./mime.json')
+const { getMimeType } = require('../lib/common')
 
-let getMimeType = function (filePath) {
-    let ext = path.extname(filePath).split('.').pop().toLowerCase();
-    if (!ext) {
-        return mimeType['.txt']
-    }
-
-    return mimeType['.' + ext] || mimeType['.txt']
-}
 module.exports = {
     static: (req, res, static) => {
         return new Promise((resolve, rejects) => {
@@ -19,6 +10,7 @@ module.exports = {
             pathname = pathname == '/' ? 'index.html' : pathname
             static = '../static' + '/' + pathname
             if (pathname != '/favicon.ico') {
+                console.log('static', static)
                 try {
                     let data = fs.readFileSync(static)
                     if (data) {
