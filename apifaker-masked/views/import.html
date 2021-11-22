@@ -1,0 +1,526 @@
+<% include inc/header.html %>
+
+<div class="container">
+    <div class="well">
+    <form class="form-horizontal" role="form" method="post" id="add-api-form">
+        <div class="form-group">
+            <label for="api-project" class="control-label col-md-2"><%=t("import.project")%>：</label>
+            <div class="col-md-2">
+                <select class="form-control" id="api-project"  autocomplete="off">
+                    <%
+                    for(var p in config.projects){
+                    %>
+                    <option value="<%=p%>" <%if(p == apiInfo.project){%>selected<%}%>><%=config.projects[p]%></option>
+                    <%
+                    }
+                    %>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="api-developer" class="control-label col-md-2"><%=t("import.developer")%>：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="api-developer" value="<%=apiInfo.developer%>" required>
+                <span class="help-block"><%-t("help.developer")%></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="api-name" class="control-label col-md-2"><%=t("import.downloadExcel")%>：</label>
+            <div class="col-md-4">
+                <a href="<%=config.staticUrl%>/assets/excel/挡板接口导入model.xlsx">模板文件</a>
+                <span class="help-block"><%-t("help.downloadExcel")%></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="api-name" class="control-label col-md-2"><%=t("import.importfile")%>：</label>
+            <div class="col-md-4">
+                <input type="file" class="form-control" id="import-file" value="<%=apiInfo.importfile%>" required>
+                <span class="help-block"><%-t("help.importfile")%></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2"><%=t("import.isCover")%>：</label>
+            <div class="col-md-4">
+                <label class="radio-inline"><input type="radio" name="api-isCover" value="add" checked autocomplete="off">添加</label>
+                <label class="radio-inline"><input type="radio" name="api-isCover" value="cover"  autocomplete="off">覆盖</label>
+                <span class="help-block"><%-t("help.isCover")%></span>
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label class="control-label col-md-2"><%=t("api.other")%>：</label>
+            <div class="col-md-6">
+                <label class="checkbox"><input type="checkbox" id="api-is-simulate" value="get" <%if(apiInfo.isSimulate){%>checked<%}%>><%=t("api.isSimulate")%></label>
+                <span class="help-block"><%=t('help.isSimulate')%></span>
+                <label class="checkbox"><input type="checkbox" id="api-is-proxy" value="post" <%if(apiInfo.isProxy){%>checked<%}%>><%=t("api.isProxy")%></label>
+                <span class="help-block"><%=t('help.isProxy')%></span>
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+                <button type="submit" class="btn btn-primary center-block" id="add-api-submit"><%=t("submit")%></button>
+        </div>
+    </form>
+    </div>
+</div> <!-- /container -->
+
+<script src="<%=config.staticUrl%>/assets/js/brand/jsoneditor-min.js"></script>
+<script src="<%=config.staticUrl%>/assets/js/brand/ace-min.js"></script>
+<script src="<%=config.staticUrl%>/assets/js/common.js?v=<%=config.staticVersion%>"></script>
+<!-- h5处理excel文件 -->
+<script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script>
+
+<script type="text/javascript" >
+
+    $(document).ready(function(){
+        
+        var apiData = []; // 存储excel获取到的解析的数据
+        $('#import-file').change(function(e) {
+            var files = e.target.files;
+
+            var fileReader = new FileReader();
+            fileReader.onload = function(ev) {
+                try {
+                    var data = ev.target.result,
+                        workbook = XLSX.read(data, {
+                            type: 'binary'
+                        }) // 以二进制流方式读取得到整份excel表格对象
+                } catch (e) {
+                    console.log('文件类型不正确');
+                    return;
+                }
+                console.log(workbook)
+
+                // 表格的表格范围，可用于判断表头是否数量是否正确
+                var fromTo = '';
+                // 遍历每张表读取
+                for (var sheet in workbook.Sheets) {
+                    if (workbook.Sheets.hasOwnProperty(sheet)) {
+                        fromTo = workbook.Sheets[sheet]['!ref'];
+                        let reg = /[0-9]+/g;
+                        length = ConvertNum(fromTo.replace(reg,"").split(':')[1])
+                        var headArr=[];
+                        for(i=0;i<length;++i){
+                            headArr.push(Convert26(i+1) + '1')
+                        }
+                        // apiData = apiData.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+                        apiData.push(disposalData(sheet,workbook.Sheets[sheet],headArr))
+                        // apiData.push({sheetName: sheet, sheetArr: XLSX.utils.sheet_to_json(workbook.Sheets[sheet])});
+                        // break; // 如果只取第一张表，就取消注释这行
+                    }
+                }
+
+                // console.log(apiData);
+            };
+
+            // 以二进制方式打开文件
+            fileReader.readAsBinaryString(files[0]);
+        });
+
+        // 26进制转10进制
+        function ConvertNum(str) {
+            var n = 0;
+            var s = str.match(/./g);//求出字符数组
+            var j = 0;
+            for (var i = str.length - 1, j = 1; i >= 0; i--, j *= 26) {
+                var c = s[i].toUpperCase();
+                if (c < 'A' || c > 'Z') {
+                    return 0;
+                }
+                n += (c.charCodeAt(0) - 64) * j;
+            }
+            return n;
+        }
+
+        // 十进制转26进制
+        function Convert26(num){
+            var str="";
+            while (num > 0){
+                var m = num % 26;
+                if (m == 0){
+                    m = 26;
+                }
+                str = String.fromCharCode(m + 64) + str;
+                num = (num - m) / 26;
+            }
+            return str;
+        }
+
+        // 模板数据
+        var param = {}
+
+        // 处理excel解析后的数据
+        function disposalData(sheetName,sheet,headArr){
+            var titleArr = []
+            for (let i = 4; i < headArr.length; i++) {
+                titleArr.push(sheet[headArr[i]].v);
+            }
+            var arr = XLSX.utils.sheet_to_json(sheet),
+            meddleArr = [],
+            apiHeadArr = [],
+            apiHead = {},
+            paramsArr = [],
+            params = [],
+            resultsArr = [],
+            simulatorsArr = [];
+            arr.forEach(item => {
+                if (item && item.A == '请求参数：') {
+                    apiHeadArr = JSON.parse(JSON.stringify(meddleArr))
+                    meddleArr = []
+                } else if (item && item.A == '响应参数：') {
+                    paramsArr = JSON.parse(JSON.stringify(meddleArr))
+                    meddleArr = []
+                } else if (item && item.A == '-') {
+                    resultsArr = JSON.parse(JSON.stringify(meddleArr))
+                }
+                meddleArr.push(item)
+            });
+            // console.log('apiHeadArr',disposeApiHeadArr(apiHeadArr))
+            apiHead = disposeApiHeadArr(apiHeadArr)
+            apiHead.name = sheetName2path(sheetName)
+            apiHead.path = '<%=config.managerPath%>'+sheetName2path(sheetName)
+            // console.log('params',disposeParamsArr(paramsArr))
+            params = disposeParamsArr(paramsArr)
+            // console.log('resultsArr',disposeResultsArr(resultsArr))
+            var results = disposeResultsArr(resultsArr)
+            var demo = disposeDemoArr(resultsArr)
+            titleArr.forEach(item => {
+                simulatorsArr.push({'mark':item,'simParams':getObj(paramsArr,item),'simResults':getbackObj(resultsArr,item,demo)})
+                // console.log({'mark':item,'simParams':getObj(paramsArr,item),'simResults':getbackObj(resultsArr,item,demo)})
+            })
+            // console.log('simulatorsArr',simulatorsArr)
+            return {sheetName,apiHead,params,results,demo,simulatorsArr}
+        }
+        function sheetName2path(name){
+            let arr = ['.', '_', '-', '~']
+            let x = arr.filter((item) => name.includes(item))
+            let path = name.split(`${x[0]}`).reduce((cur, pre) => {
+                return `${cur}/${pre}`
+            }, '')
+            return path.substr(1);
+        }
+        // 模拟数据请求数据
+        function getObj(arr,str){
+            var objArr = []
+            arr.forEach(item => {
+                if(item.hasOwnProperty(str)){
+                    objArr.push({name:item.A,value:item[str],desc:item.D,type:item.B})
+                }
+            })
+            return objArr
+        }
+
+        // 循环遍历对象中的数据
+        function EdiObjValue(obj, data) {
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    if (Object.prototype.toString.call(obj[prop]) == '[object Object]' || Object.prototype.toString.call(obj[prop]) === '[object Array]') {
+                        EdiObjValue(obj[prop], data)
+                    }
+                    if (prop == data.name || data.type.indexOf(prop) > -1) {
+                        if (data.type.indexOf("List") > -1 || data.type.indexOf("list") > -1 || data.type.indexOf("jsonArray") > -1) {
+                            // obj[prop].length = parseInt(data.value)
+                            // obj[prop].fill(obj[prop][0])
+                            // obj[prop].push(obj[prop][0])
+                            obj[prop].push(data.value)
+                            // obj[prop].fill(data.value)
+                        } else {
+                            if (['string','STRING'].indexOf(data.type) > -1) {
+                                obj[prop] = data.value;
+                            } else if (['int','long','double','short','float'].indexOf(data.type) > -1) {
+                                obj[prop] = Number(data.value);
+                            } else if (['bool','boolean'].indexOf(data.type) > -1) {
+                                obj[prop] = !!data.value
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 模拟数据返回数据
+        function getbackObj(arr,str,demo){
+            var objArr = getObj(arr,str)
+            var strdata = JSON.parse(JSON.stringify(demo))
+            objArr.sort(compare('type'))
+            console.log('objArr',objArr)
+            console.log('strdata',strdata)
+            objArr.forEach(item => {
+                EdiObjValue(strdata, item)
+            })
+            return strdata
+        }
+
+        function compare(property){
+            return function(a,b){
+                if (a[property].indexOf('List') > -1 || a[property].indexOf('list') > -1) {
+                    return 1
+                }
+                return -1;
+            }
+        }
+
+        // 处理返回数据
+        function disposeResultsArr(arr){
+            const myReg = /^[a-zA-Z0-9._]{0,}$/
+            var b = []
+            var results = []
+            var name = ''
+            arr.forEach(item => {
+                if (myReg.test(item.A)) {
+                    if (!item.hasOwnProperty('B')) {
+                        if (name == '') {
+                            results = JSON.parse(JSON.stringify(b))
+                        } else {
+                            setObjFn(results, name, b)
+                            // results.forEach(item1 => {
+                            //     if (item1.name == name) {
+                            //         item1.obj = b
+                            //     } else if ((item1.type.indexOf('List') > -1 || item1.type.indexOf('list') > -1)&& item1.type.indexOf(name) > -1) {
+                            //         item1.arr = b
+                            //     }
+                            // })
+                        }
+                        name = item.A
+                        b = []
+                    } else {
+                        b.push({name:item.A,type:item.B,isMust:item.C == "必选" ? "1" : "0",desc:item.D})
+                    }
+                }
+            })
+            if (name == '') {
+                results = JSON.parse(JSON.stringify(b))
+            } else {
+                setObjFn(results, name, b)
+                // results.forEach(item1 => {
+                //     if (item1.name == name) {
+                //         item1.obj = b
+                //     } else if ((item1.type.indexOf('List') > -1 || item1.type.indexOf('list') > -1) && item1.type.indexOf(name) > -1) {
+                //         item1.arr = b
+                //     }
+                // })
+            }
+            // console.log('demo',demo)
+            return results
+        }
+
+        // 设置obj
+        function setObjFn(results, name, b){
+                results.forEach(item => {
+                    if (item.name == name) {
+                        item.obj = b
+                    } else if ((item.type.indexOf('List') > -1 || item.type.indexOf('list') > -1)&& item.type.indexOf(name) > -1) {
+                        item.arr = b
+                    } else if(!!item.obj){
+                        setObjFn(item.obj, name, b)
+                    }
+                })
+        }
+
+        // 循环处理返回结果
+        // 循环遍历对象中的数据
+        function EdiDemoValue(obj, arr) {
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    if (Object.prototype.toString.call(obj[prop]) == '[object Object]'){
+                        arr.forEach(item => {
+                            for (var itemProp in item) {
+                                if (itemProp == prop) {
+                                    EdiDemoValue(item[itemProp], arr)
+                                    obj[prop] = item[itemProp]
+                                }
+                            }
+                        })
+                    } else if (Object.prototype.toString.call(obj[prop]) === '[object Array]') {
+                        arr.forEach(item => {
+                            for (var itemProp in item) {
+                                if (itemProp == prop) {
+                                    EdiDemoValue(item[itemProp], arr)
+                                    obj[prop].push(item[itemProp])
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        }
+
+        // 处理返回demo
+        function disposeDemoArr(arr){
+            const myReg = /^[a-zA-Z0-9._]{0,}$/
+            var strType = ['string','STRING'],
+            numType = ['int','long','double','short','float'],
+            boolType = ['bool','boolean'];
+            var a = {},
+            demo = {},
+            name = '',
+            obj = {},
+            jsonarr = [];
+            for (let i = 0;i < arr.length; i++) {
+                const item = arr[i];
+                if (myReg.test(item.A)) {
+                    if (!item.hasOwnProperty('B')) {
+                        if (name == '') {
+                            demo = a
+                        } else {
+                            obj[name] = a
+                            jsonarr.push(obj)
+                        }
+                        a = {}
+                        obj = {}
+                        name = item.A
+                    } else {
+                        if (strType.indexOf(item.B) > -1) {
+                            a[item.A] = ''
+                        } else if (numType.indexOf(item.B) > -1) {
+                            a[item.A] = 0
+                        } else if (boolType.indexOf(item.B) > -1) {
+                            a[item.A] = true
+                        } else if (item.B.indexOf('List') > -1 || item.B.indexOf('list') > -1 || item.B.indexOf('jsonArray') > -1) {
+                            a[item.A] = []
+                        } else if (item.B.indexOf('json') > -1 || item.B.indexOf('Json') > -1) {
+                            a[item.A] = {}
+                        }
+                    }
+                }
+            }
+            if (name == '') {
+                demo = a
+            } else {
+                obj[name] = a
+                jsonarr.push(obj)
+            }
+            EdiDemoValue(demo, jsonarr)
+            // console.log(demo)
+            return demo
+        }
+
+        // 处理请求数据
+        function disposeParamsArr(arr){
+            const myReg = /^[a-zA-Z0-9._]{0,}$/
+            var a = []
+            var b = []
+            var params = []
+            var paramsArr = []
+            var name = ''
+            arr.forEach(item => {
+                if (myReg.test(item.A)) {
+                    if (!item.hasOwnProperty('B')) {
+                        if (name == '') {
+                            paramsArr = JSON.parse(JSON.stringify(b))
+                            params = JSON.parse(JSON.stringify(a))
+                        } else {
+                            paramsArr.forEach(item1 => {
+                                if (item1.name == name) {
+                                    item1.obj = b
+                                } else if(item1.type.indexOf(name) > -1) {
+                                    item1.arr = b
+                                }
+                            })
+                        }
+                        name = item.A
+                        a = []
+                        b = []
+                    } else {
+                        if (name == '') {
+                            a.push({name:item.A,type:item.C == "必选" ? "1" : "0",desc:item.D})
+                        }
+                        b.push({name:item.A,type:item.B,isMust:item.C == "必选" ? "1" : "0",desc:item.D})
+                    }
+                }
+            })
+            if (name == '') {
+                paramsArr = JSON.parse(JSON.stringify(b))
+                params = JSON.parse(JSON.stringify(a))
+            } else {
+                paramsArr.forEach(item1 => {
+                    if (item1.name == name) {
+                        item1.obj = b
+                    } else if(item1.type.indexOf(name) > -1) {
+                        item1.arr = b
+                    }
+                })
+            }
+            // console.log('paramsArr',paramsArr)
+            return params
+        }
+        
+        // 处理接口基本数据
+        function disposeApiHeadArr(arr){
+            const apiNameArr = ['接口http类型','接口类型','接口用途','接口使用说明','域名','路径','附加参数']
+            const apiTitleArr = ['httpType','type','purpose','desc','host','path','urlAddon']
+            var params = {
+                type: 'json',
+                httpType: ['post'],
+                purpose: '',
+                desc: '',
+                host: '<%=config.siteUrl%>',
+                path: '',
+                urlAddon: ''
+            }
+            arr.forEach(item => {
+                if(apiNameArr.indexOf(item.A) > 0 && item.B){
+                    params[apiTitleArr[apiNameArr.indexOf(item.A)]] = item.B
+                } else if (apiNameArr.indexOf(item.A) == 0 && item.B) {
+                    params['httpType'] = []
+                    var obj = JSON.parse(JSON.stringify(item))
+                    delete obj.A
+                    for (var key in obj){
+                        params['httpType'].push(item[key]);    
+                    }
+                }
+            })
+            return params
+        }
+
+        // var treeeditor = new jsoneditor.JSONEditor($('#jsoneditor-tree')[0]),
+        //         codeeditor = new jsoneditor.JSONEditor($('#jsoneditor-code')[0], {mode: 'code'}),
+        //         texteditor = ace.edit('text-editor'),
+        //         $apiType = $('[name="api-type"]'),
+        //         // $paramsWrapper = $('#params-wrapper'),
+        //         // $resultsWrapper = $('#results-wrapper'),
+        var $addApiForm = $('#add-api-form');
+        $addApiForm.submit(addApi)
+        function addApi(e){
+            e.preventDefault();
+            
+            var params = {},
+            SheetNames = [],
+            project = $('#api-project').val(),
+            developer = $('#api-developer').val(),
+            isSimulate = $('#api-is-simulate').is(':checked'),
+            isProxy = $('#api-is-proxy').is(':checked');
+            isCover = $('[name="api-isCover"]:checked').val(),
+            params.project = project;
+            params.developer = developer;
+            params.isSimulate = isSimulate;
+            params.isProxy = isProxy;
+            apiData.forEach(item => {
+                Object.assign(item.apiHead,params)
+                SheetNames.push(item.apiHead.name)
+            })
+            // apiData.apiHead.concat(params)
+            var ajaxUrl = '';
+            ajaxUrl = '<%=config.siteUrl+config.managerPath%>apis/import'
+            $.ajax({
+                type: 'post',
+                url: ajaxUrl,
+                data: {data: JSON.stringify(apiData),isCover:isCover,SheetNames:SheetNames},
+                success: function(results){
+                    if(results.retcode == 0){
+                        alert(results.retmsg || '<%=t("tips.operationSuccess")%>');
+                        location.href = '<%=config.siteUrl+config.managerPath%>';
+                    }else{
+                        alert(results.retmsg || '<%=t("tips.operationFailed")%>');
+                    }
+                },
+                error: function(err){
+                    alert(err);
+                }
+            });
+        }
+    });
+
+
+</script>
+<% include inc/footer.html %>
