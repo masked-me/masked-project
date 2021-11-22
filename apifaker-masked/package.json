@@ -7,7 +7,7 @@
   "main": "apifaker.js",
   "private": true,
   "scripts": {
-    "dev":"node ./apifaker.js"
+    "dev": "node ./apifaker.js"
   },
   "repository": {
     "type": "git",
