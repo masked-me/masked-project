@@ -110,7 +110,6 @@
                     }
                 }
 
-                // console.log(apiData);
             };
 
             // 以二进制方式打开文件
@@ -175,20 +174,15 @@
                 }
                 meddleArr.push(item)
             });
-            // console.log('apiHeadArr',disposeApiHeadArr(apiHeadArr))
             apiHead = disposeApiHeadArr(apiHeadArr)
             apiHead.name = sheetName2path(sheetName)
             apiHead.path = '<%=config.managerPath%>'+sheetName2path(sheetName)
-            // console.log('params',disposeParamsArr(paramsArr))
             params = disposeParamsArr(paramsArr)
-            // console.log('resultsArr',disposeResultsArr(resultsArr))
             var results = disposeResultsArr(resultsArr)
             var demo = disposeDemoArr(resultsArr)
             titleArr.forEach(item => {
                 simulatorsArr.push({'mark':item,'simParams':getObj(paramsArr,item),'simResults':getbackObj(resultsArr,item,demo)})
-                // console.log({'mark':item,'simParams':getObj(paramsArr,item),'simResults':getbackObj(resultsArr,item,demo)})
             })
-            // console.log('simulatorsArr',simulatorsArr)
             return {sheetName,apiHead,params,results,demo,simulatorsArr}
         }
         function sheetName2path(name){
@@ -243,8 +237,6 @@
             var objArr = getObj(arr,str)
             var strdata = JSON.parse(JSON.stringify(demo))
             objArr.sort(compare('type'))
-            console.log('objArr',objArr)
-            console.log('strdata',strdata)
             objArr.forEach(item => {
                 EdiObjValue(strdata, item)
             })
@@ -273,13 +265,6 @@
                             results = JSON.parse(JSON.stringify(b))
                         } else {
                             setObjFn(results, name, b)
-                            // results.forEach(item1 => {
-                            //     if (item1.name == name) {
-                            //         item1.obj = b
-                            //     } else if ((item1.type.indexOf('List') > -1 || item1.type.indexOf('list') > -1)&& item1.type.indexOf(name) > -1) {
-                            //         item1.arr = b
-                            //     }
-                            // })
                         }
                         name = item.A
                         b = []
@@ -292,15 +277,7 @@
                 results = JSON.parse(JSON.stringify(b))
             } else {
                 setObjFn(results, name, b)
-                // results.forEach(item1 => {
-                //     if (item1.name == name) {
-                //         item1.obj = b
-                //     } else if ((item1.type.indexOf('List') > -1 || item1.type.indexOf('list') > -1) && item1.type.indexOf(name) > -1) {
-                //         item1.arr = b
-                //     }
-                // })
             }
-            // console.log('demo',demo)
             return results
         }
 
@@ -391,7 +368,6 @@
                 jsonarr.push(obj)
             }
             EdiDemoValue(demo, jsonarr)
-            // console.log(demo)
             return demo
         }
 
@@ -441,7 +417,6 @@
                     }
                 })
             }
-            // console.log('paramsArr',paramsArr)
             return params
         }
         

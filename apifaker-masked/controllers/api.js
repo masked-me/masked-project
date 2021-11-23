@@ -112,7 +112,6 @@ router.route('/apis/import')
    if (isCover == 'cover') {
      coverApi(data, req, res)
    } else if (isCover == 'add') {
-    //  console.log(JSON.stringify(data))
      addSimulators(data, req, res)
    }
  })
@@ -184,10 +183,7 @@ router.route('/apis/view/:id')
  .get(function (req, res) {
    var id = req.params.id;
    db.apiList.findOne({ _id: id, deleted: false },async function (err, doc) {
-    console.log('doc.results',doc.results);
-    console.log('doc.demo',doc.demo);
     await mockDataPromise(doc.results,doc.demo).then(proResults=>{
-      // console.log("proResults=====",proResults);
       doc.demo=proResults;
     })
      if (err) {
@@ -219,7 +215,6 @@ router.route('/apis/delete/:id')
 module.exports = router;
 
 async function coverApi(apiArr, req, res) {
-  console.log('apiArr',apiArr)
  for (let i = 0; i < apiArr.length; i++) {
    var exitApi = isError(await dealDatabase.findApi(apiArr[i].apiHead.name), req, res)
    if (exitApi.length > 0) {
@@ -238,9 +233,6 @@ async function coverApi(apiArr, req, res) {
 }
 
 async function addSimulators(apiArr, req, res) {
-  console.log('apiArr',apiArr)
-  // console.log('apiArr',req)
-  // console.log('apiArr',res)
  for (let i = 0; i < apiArr.length; i++) {
    var exitApi = isError(await dealDatabase.findApi(apiArr[i].apiHead.name), req, res)
    var newApi = {}

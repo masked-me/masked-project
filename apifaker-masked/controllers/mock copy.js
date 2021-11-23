@@ -86,7 +86,6 @@ module.exports = (keyAndTypeData,demoData) => new Promise((success, rej) => {
             }
 
         })
-        // console.log("MockData=====", MockData);
         success(MockData);
     } else {
         rej("解析失败");

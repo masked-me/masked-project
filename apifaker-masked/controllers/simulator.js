@@ -64,7 +64,6 @@ router.route('/simulators/:apiId')
         res.render('message',{msg: req.t('tips.errorOccurred')+": "+err.toString()});
         return;
       }
-      // console.log(JSON.stringify(results))
       res.render('simulators', {apiInfo: results.getApiInfo, simulators: results.getSimulators});
     });
 
@@ -157,14 +156,9 @@ router.route('/simulator/edit/:id')
         res.render('message',{msg: req.t('tips.errorOccurred')+": "+err.toString()});
         return;
       }
-      console.log('results.getApiInfo.results',JSON.stringify(results.getApiInfo.results))
-      console.log('results.getApiInfo.results',results.getApiInfo.results)
-      console.log('results.getSimulator.simResults',JSON.stringify(results.getSimulator.simResults))
-      console.log('results.getSimulator.simResults',results.getSimulator.simResults)
       await mockDataPromise(results.getApiInfo.results, results.getSimulator.simResults).then(proResults => {
         results.getApiInfo.demo = proResults;
       })
-      // console.log(JSON.stringify(results))
       res.render('simulator', {
         apiInfo: results.getApiInfo,
         simulator: results.getSimulator,
