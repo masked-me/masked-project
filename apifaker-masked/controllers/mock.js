@@ -12,167 +12,75 @@ module.exports = (keyAndTypeData,demoData) => new Promise((success, rej) => {
     };
     let MockData = {}; //最终返回的对象
     let jsonArrayData = {}; //jsonArray
-    let jsonData = {};//普通json
-    let params = {}; //普通的外层参数
-    let list = [];
     if (!!keyAndTypeData) {
-        keyAndTypeData.map(res => {
-            if (res.type == "jsonArray") {
-                jsonArrayData = {};
-                list = [];
-                let onlyOne = '';
-                // 对于多维数组对象进行递归
-                const jsoRecursion = (objItem, objName, dome, box, prebox, type) => {
-                    let curDome = dome[objName]
-                    // 判空处理
-                    if (!!objItem) {
-                        onlyOne = Array.isArray(curDome) 
-                        ? 
-                            Array.isArray(curDome.slice(-1)) 
-                        ? 
-                            curDome.slice(-1)[0] 
-                        :
-                            {}
-                        :
-                            {}
-                        let totals = typeof(onlyOne) != 'object'? onlyOne : Random.int(1, 20); //随机生成1-20条数据条数
-                        objItem.map((item,index,arr) => {
-                            if (item.type == "jsonArray" || item.type == "json") {
-                                box[item.name] = {}
-                                let toSonCurDome = Array.isArray(curDome) ? curDome[0] : curDome
-                                jsoRecursion(item.obj, item.name, toSonCurDome, box[item.name], box, item.type)
-                            } else if (item.type == "list"){
-                                let listCurDome = Array.isArray(curDome)  ? curDome[0] : curDome
-                                let str = listCurDome[item.name][0] || '';
-                                let arrayData = []
-                                if(str.indexOf(',') != -1){
-                                    let arr = str.split(',')
-                                    for(let i in arr){
-                                        arrayData.push(arr[i])
-                                    }
-                                }else{
-                                    let arrayTotals = !!listCurDome[item.name].length ? str : Random.int(1, 20); //随机生成1-50条数据条数
-                                    for(let i = 0;i<arrayTotals;i++){
-                                        let arrayString = Mock.mock("@ctitle");
-                                        arrayData.push(arrayString);
-                                    }
-                                }
-                                box[item.name] = arrayData
-                            } else {
-                                let otherCurDome = Array.isArray(curDome)  ? curDome[0] : curDome
-                                box[item.name] = !!otherCurDome[item.name] ? otherCurDome[item.name] : Mock.mock(typeArr[item.type])
+        // 对于多维数组对象进行递归
+        const jsoRecursion = (jsonObject, dome, box, prebox) => {
+            let { obj, name, type } = jsonObject;
+            let curDome = name == '' ? dome : dome[name]
+            // 判空处理
+            if (!!obj) {
+                // 获取jsonArray 数组的长度
+                let jsonArrayLength = Array.isArray(curDome) ? Array.isArray(curDome.slice(-1)) ? curDome.slice(-1)[0] : {}: {};
+                let totals = typeof(jsonArrayLength) != 'object'? jsonArrayLength : Random.int(1, 20); //随机生成1-20条数据条数
+                // 获取当前模块真实dome
+                curDome = Array.isArray(curDome) ? curDome[0] : curDome
+                // 遍历处理数据
+                obj.map((item,index,arr) => {
+                    // 分支判断
+                    if (item.type == "jsonArray" || item.type == "json") {
+                        // jsonArray、json类型数据处理 并赋初始值 {}
+                        box[item.name] = {}
+                        // 递归调用
+                        jsoRecursion(item, curDome, box[item.name], box)
+                    } else if (item.type == "list"){
+                        // list类型数据处理
+                        let str = curDome[item.name][0] || '';
+                        let arrayData = []
+                        if(str.indexOf(',') != -1){
+                            let arr = str.split(',')
+                            for(let i in arr){
+                                arrayData.push(arr[i])
                             }
-                            if(arr.length-1 == index){
-                                let arr = []
-                                arr.length = totals
-                                arr.fill(box)
-                                type == 'jsonArray' ? prebox[objName] = arr : prebox[objName] = box
-                                
+                        }else{
+                            let arrayTotals = !!curDome[item.name].length ? str : Random.int(1, 20); //随机生成1-50条数据条数
+                            for(let i = 0;i<arrayTotals;i++){
+                                let arrayString = Mock.mock("@ctitle");
+                                arrayData.push(arrayString);
                             }
-                        })
+                        }
+                        box[item.name] = arrayData
                     } else {
-                        return []
-                    }
-                }
-                jsoRecursion(res.obj, res.name, demoData, {}, jsonArrayData, res.type)
-                // 对象合并 
-                MockData = Object.assign({}, MockData, jsonArrayData);
-            } else {
-                let resData = {};//外层参数合并对象
-                let arrayData = [];//简单数组
-                if(res.type == "json"){
-                    // 对json类型进行处理
-                    // 对于多维数组对象进行递归
-                    const jsonReslove = (objItem, objName, dome, box, prebox, type) => {
-                        let curDome = dome[objName]
-                        // 判空处理
-                        if (!!objItem) {
-                            onlyOne = Array.isArray(curDome) 
-                            ? 
-                                Array.isArray(curDome.slice(-1)) 
-                            ? 
-                                curDome.slice(-1)[0] 
-                            :
-                                {}
-                            :
-                                {}
-                            let totals = typeof(onlyOne) != 'object'? onlyOne : Random.int(1, 20); //随机生成1-20条数据条数
-                            objItem.map((item,index,arr) => {
-                                if (item.type == "json" || item.type == "jsonArray") {
-                                    box[item.name] = {}
-                                    let toSonCurDome =  Array.isArray(curDome) ? curDome[0] : curDome
-                                    jsonReslove(item.obj, item.name, toSonCurDome, box[item.name], box, item.type)
-                                }  else if (item.type == "list"){
-                                    let str = (Array.isArray(curDome) ? curDome[0][item.name][0] : curDome[item.name][0] )|| ''
-                                    let arrayData = []
-                                    if(str.indexOf(',') != -1){
-                                        let arr = str.split(',')
-                                        for(let i in arr){
-                                            arrayData.push(arr[i])
-                                        }
-                                    }else{
-                                        let orCurDome = Array.isArray(curDome) ? curDome[0] : curDome
-                                        let arrayTotals = !!orCurDome[item.name][0] ? str : Random.int(1, 20); //随机生成1-50条数据条数
-                                        for(let i = 0;i<arrayTotals;i++){
-                                            let arrayString = Mock.mock("@ctitle");
-                                            arrayData.push(arrayString);
-                                        }
-                                    }
-                                    box[item.name] = arrayData
-                                } else {
-                                    let strCurDome = Array.isArray(curDome) ? curDome[0] : curDome
-                                    box[item.name] = !!strCurDome[item.name] ? strCurDome[item.name] : Mock.mock(typeArr[item.type])
-                                }
-
-                                if(arr.length-1 == index){
-                                    let arr = []
-                                    arr.length = totals
-                                    arr.fill(box)
-                                    type == 'jsonArray' ? prebox[objName] = arr : prebox[objName] = box
-                                }
-                            })
+                        // 非jsonArray、json、list类型数据处理
+                        if(!!curDome[item.name] && curDome[item.name].toString().indexOf('@') == 0) {
+                            box[item.name] =  Mock.mock(curDome[item.name])
                         } else {
-                            return []
+                            box[item.name] = !!curDome[item.name] ? curDome[item.name] : Mock.mock(typeArr[item.type])
                         }
                     }
-                    jsonReslove(res.obj, res.name, demoData, {}, jsonData)
-                }else if(res.type == "list"){
-                    let str = demoData[res.name][0] || ''
-                    if(str.indexOf(',') != -1){
-                        let arr = str.split(',')
-                        for(let i in arr){
-                            arrayData.push(arr[i])
-                        }
-                    }else{
-                        let arrayTotals = !!demoData[res.name][0] ? str : Random.int(1, 20); //随机生成1-50条数据条数
-                        for(let i = 0;i<arrayTotals;i++){
-                            let arrayString = Mock.mock("@ctitle");
-                            arrayData.push(arrayString);
-                        }
+                    // 当前数组循环处理完时 处理数据拼装
+                    if(arr.length-1 == index){
+                        let jsonObjArray = []
+                        jsonObjArray.length = totals
+                        jsonObjArray.fill(box)
+                        // 当为jsonArray时,用当前对象填充数组
+                        type == 'jsonArray' ? prebox[name] = jsonObjArray : prebox[name] = box
                     }
-
-                    //对简单数组进行处理 
-                    arrayData = {[res.name]:arrayData}
-                }else{
-                    // 对外层参数进行处理
-                    resData = !!demoData[res.name] 
-                    ?
-                        {
-                            [res.name]: demoData[res.name]
-                        }
-                    :
-                        Mock.mock({
-                            [res.name]: typeArr[res.type]
-                        })
-                    params = Object.assign({}, params, resData);
-                }
-                // 对象合并 
-                MockData = Object.assign({}, MockData, jsonData);
-                MockData = Object.assign({}, MockData, arrayData);
-                MockData = Object.assign({}, MockData, params);
+                })
+            } else {
+                return []
             }
-
-        })
+        }
+        // 声明符合jsoRecursion第一个入参规格的对象
+        let processed = {
+            obj: keyAndTypeData,
+            name: '',
+            type: 'json'
+        }
+        // 调用数据递归处理
+        jsoRecursion(processed, demoData, {}, jsonArrayData)
+        // 对象合并 
+        MockData = Object.assign({}, MockData, Object.values(jsonArrayData)[0]);
+        // 返回数据
         success(MockData);
     } else {
         rej("解析失败");
