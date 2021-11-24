@@ -33,7 +33,9 @@
     //store api's simulator data
     simulators: new Datastore({ filename: './data/api-simulators.db', autoload: true }),
     //store api update history
-    apiHistory: new Datastore({ filename: './data/api-history.db', autoload: true })
+    apiHistory: new Datastore({ filename: './data/api-history.db', autoload: true }),
+    //store api real data
+    apiRealdata: new Datastore({ filename: './data/api-realdata.db', autoload: true })
   };
 
   module.exports = db;

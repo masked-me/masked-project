@@ -57,6 +57,7 @@ module.exports = (keyAndTypeData,demoData) => new Promise((success, rej) => {
             function listMockHandle(curDome, item, box){
                 let str = curDome[item.name][0] || '';
                 let arrayData = []
+                // 数组判断是否指定值
                 if(str.indexOf(',') != -1){
                     let arr = str.split(',')
                     for(let i in arr){

@@ -43,9 +43,9 @@
             </div>
             <div class="editor-wrapper clearfix">
                 <div class="editor-tools">
-                    <!-- <button type="button" class="btn btn-info btn-sm" title="<%=t('tips.moveLeftToRight')%>" data-action="to-right"><span class="glyphicon glyphicon-chevron-right"></span></button> -->
+                    <button type="button" class="btn btn-info btn-sm btn-Center" title="<%=t('tips.moveLeftToRight')%>" data-action="to-right"><span class="glyphicon glyphicon-chevron-right"></span></button>
                     <br/><br/>
-                    <!-- <button type="button" class="btn btn-info btn-sm" title="<%=t('tips.moveRightToLeft')%>" data-action="to-left"><span class="glyphicon glyphicon-chevron-left"></span></button> -->
+                    <button type="button" class="btn btn-info btn-sm btn-Center" title="<%=t('tips.moveRightToLeft')%>" data-action="to-left"><span class="glyphicon glyphicon-chevron-left"></span></button>
                 </div>
                 <div id="text-editor" class="col-md-12">
 
@@ -59,13 +59,13 @@
             </div>
             <hr/>
             <div class="form-group">
-                <!-- <button type="submit" class="btn btn-primary center-block" id="add-api-submit"><%=t('submit')%></button> -->
+                <button type="submit" class="btn btn-primary center-block" id="add-api-submit"><%=t('submit')%></button>
             </div>
         </form>
     </div>
 </div> <!-- /container -->
 
-<script src="<%=config.staticUrl%>/assets/js/brand/jsoneditor-min.js"></script>
+<script src="<%=config.staticUrl%>/assets/js/brand/jsoneditor.min.js"></script>
 <script src="<%=config.staticUrl%>/assets/js/brand/ace-min.js"></script>
 <script src="<%=config.staticUrl%>/assets/js/common.js?v=<%=config.staticVersion%>"></script>
 
@@ -124,8 +124,8 @@
 
         function initEditors(){
             if('json' == '<%=apiInfo.type%>' || '<%=apiInfo.type%>'.indexOf('json') > -1) {
-                treeeditor = new jsoneditor.JSONEditor($('#jsoneditor-tree')[0]);
-                codeeditor = new jsoneditor.JSONEditor($('#jsoneditor-code')[0], {mode: 'code'});
+                treeeditor = new JSONEditor($('#jsoneditor-tree')[0]);
+                codeeditor = new JSONEditor($('#jsoneditor-code')[0], {mode: 'code'});
                 var defaultSimResults = {
                     "retcode": 0,
                     "retmsg": "success",
@@ -185,7 +185,7 @@
                 if('json' == '<%=apiInfo.type%>') {
                     params.simResults = codeeditor.get();
                 }else{
-                    params.simResults = texteditor.getSession().getValue();
+                    params.simResults = codeeditor.get();
                 }
             }catch (err){
                 alert('<%=t("tips.requireResultField")%>：'+ err.message);
@@ -225,10 +225,20 @@
             return false;
         }
 
+        function displayButton(){
+            let displayArr = ['.jsoneditor-repair','.jsoneditor-sort','.jsoneditor-transform','.jsoneditor-sort','.jsoneditor-transform']
+            displayArr.forEach(item=>{
+                document.querySelectorAll(item).forEach(i=>{
+                    i.style.display = 'none';
+                })
+            })
+        }
+
         function init(){
             bindEvents();
             initParams();
             initEditors();
+            displayButton();
         }
 
         init();

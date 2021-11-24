@@ -156,35 +156,67 @@ router.route('/simulator/edit/:id')
         res.render('message',{msg: req.t('tips.errorOccurred')+": "+err.toString()});
         return;
       }
-      await mockDataPromise(results.getApiInfo.results, results.getSimulator.simResults).then(proResults => {
-        results.getApiInfo.demo = proResults;
+      // await mockDataPromise(results.getApiInfo.results, results.getSimulator.simResults).then(proResults => {
+      //   results.getApiInfo.demo = proResults;
+      // })
+
+      db.apiRealdata.findOne({_realid: id},async (err,resObj)=>{
+        if(err){
+          console.log('err', err)
+        }
+        if(resObj == null){
+          await mockDataPromise(results.getApiInfo.results, results.getSimulator.simResults).then(proResults => {
+            results.getApiInfo.demo = proResults;
+            db.apiRealdata.insert({_realid:id, value:JSON.stringify(proResults)})
+          })
+        }else{
+          results.getApiInfo.demo = JSON.parse(resObj.value)
+        }
+        res.render('simulator', {
+          apiInfo: results.getApiInfo,
+          simulator: results.getSimulator,
+          apiId: results.getApiInfo._id,
+          simulatorId: id
+        });
       })
-      res.render('simulator', {
-        apiInfo: results.getApiInfo,
-        simulator: results.getSimulator,
-        apiId: results.getApiInfo._id,
-        simulatorId: id
-      });
+      
+      // res.render('simulator', {
+      //   apiInfo: results.getApiInfo,
+      //   simulator: results.getSimulator,
+      //   apiId: results.getApiInfo._id,
+      //   simulatorId: id
+      // });
     });
   })
   .post(function(req, res){
-    var data = req.body.data;
-    try{
-      data = JSON.parse(data);
-    }catch (e){
-      console.log(e);
-      res.json({retcode:-1,retmsg:req.t('tips.jsonFormatErr')});
-      return;
-    }
-    data.updateTime = new Date();
-    db.simulators.update({_id: data._id}, data, {}, function(err, doc){
+    let dataObj = JSON.parse(req.body.data)
+    let id = dataObj._id
+    let updateTime = new Date();
+    let updateData = JSON.stringify(dataObj.simResults)
+    db.apiRealdata.update({ _realid: id },{$set:{value:updateData,updateTime}}, function(err, doc){
       if(err){
         console.log(err);
         res.json({retcode:-1,retmsg:req.t('tips.saveFailed')});
         return;
       }
       res.json({retcode:0,retmsg:req.t('tips.saveSuccess')});
-    });
+    });;
+    // try{
+    //   data = JSON.parse(data);
+    // }catch (e){
+    //   console.log(e);
+    //   res.json({retcode:-1,retmsg:req.t('tips.jsonFormatErr')});
+    //   return;
+    // }
+    // data.updateTime = new Date();
+    // db.simulators.update({_id: data._id}, data, {}, function(err, doc){
+    //   if(err){
+    //     console.log(err);
+    //     res.json({retcode:-1,retmsg:req.t('tips.saveFailed')});
+    //     return;
+    //   }
+    //   res.json({retcode:0,retmsg:req.t('tips.saveSuccess')});
+    // });
   });
 
 /**

@@ -48,19 +48,22 @@ a, a:focus, a:visited{
 .editor-wrapper{
     position: relative;
 }
+.btn-Center{
+    padding: 3px 6px;
+}
 .editor-wrapper .editor-tools{
     position: absolute;
     left: 50%;
     top: 100px;
-    margin-left: -17px;
+    transform: translateX(-50%);
     z-index: 999;
 }
 #text-editor{
     display: none;
     height: 400px;
 }
-#jsoneditor-code{
-    height: 400px;
+#jsoneditor-code, #jsoneditor-tree{
+    height: 450px;
 }
 .jsoneditor div.tree{
     background-color: #fff;
