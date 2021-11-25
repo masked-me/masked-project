@@ -123,7 +123,7 @@
     </div>
 </div> <!-- /container -->
 
-<script src="<%=config.staticUrl%>/assets/js/brand/jsoneditor-min.js"></script>
+<script src="<%=config.staticUrl%>/assets/js/brand/jsoneditor.min.js"></script>
 <script src="<%=config.staticUrl%>/assets/js/brand/ace-min.js"></script>
 <script src="<%=config.staticUrl%>/assets/js/common.js?v=<%=config.staticVersion%>"></script>
 
@@ -131,7 +131,7 @@
 
     ;(function(){
         if('json' == '<%=apiInfo.type%>' || '<%=apiInfo.type%>'.indexOf('json') > -1) {
-            var codeeditor = new jsoneditor.JSONEditor($('#jsoneditor-code')[0], {mode: 'code'});
+            var codeeditor = new JSONEditor($('#jsoneditor-code')[0], {mode: 'code'});
             var demo = null;
             try {
                 demo = <%-JSON.stringify(apiInfo.demo)%>;

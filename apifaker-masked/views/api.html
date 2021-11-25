@@ -164,15 +164,15 @@
     </div>
 </div> <!-- /container -->
 
-<script src="<%=config.staticUrl%>/assets/js/brand/jsoneditor-min.js"></script>
+<script src="<%=config.staticUrl%>/assets/js/brand/jsoneditor.min.js"></script>
 <script src="<%=config.staticUrl%>/assets/js/brand/ace-min.js"></script>
 <script src="<%=config.staticUrl%>/assets/js/common.js?v=<%=config.staticVersion%>"></script>
 
 <script type="text/javascript" >
 
     $(document).ready(function(){
-        var treeeditor = new jsoneditor.JSONEditor($('#jsoneditor-tree')[0]),
-                codeeditor = new jsoneditor.JSONEditor($('#jsoneditor-code')[0], {mode: 'code'}),
+        var treeeditor = new JSONEditor($('#jsoneditor-tree')[0]),
+                codeeditor = new JSONEditor($('#jsoneditor-code')[0], {mode: 'code'}),
                 texteditor = ace.edit('text-editor'),
                 $apiType = $('[name="api-type"]'),
                 $paramsWrapper = $('#params-wrapper'),
