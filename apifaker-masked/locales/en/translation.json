@@ -21,7 +21,8 @@
   "copy": "Copy",
   "menus": {
     "list": "Api List",
-    "add": "Add Api"
+    "add": "Add Api",
+    "import": "Import Api"
   },
   "types": {
     "string": "String",

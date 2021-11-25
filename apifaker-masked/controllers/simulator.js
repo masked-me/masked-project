@@ -189,6 +189,7 @@ router.route('/simulator/edit/:id')
     });
   })
   .post(function(req, res){
+    let data = req.body.data
     let dataObj = JSON.parse(req.body.data)
     let id = dataObj._id
     let updateTime = new Date();
@@ -201,22 +202,22 @@ router.route('/simulator/edit/:id')
       }
       res.json({retcode:0,retmsg:req.t('tips.saveSuccess')});
     });;
-    // try{
-    //   data = JSON.parse(data);
-    // }catch (e){
-    //   console.log(e);
-    //   res.json({retcode:-1,retmsg:req.t('tips.jsonFormatErr')});
-    //   return;
-    // }
-    // data.updateTime = new Date();
-    // db.simulators.update({_id: data._id}, data, {}, function(err, doc){
-    //   if(err){
-    //     console.log(err);
-    //     res.json({retcode:-1,retmsg:req.t('tips.saveFailed')});
-    //     return;
-    //   }
-    //   res.json({retcode:0,retmsg:req.t('tips.saveSuccess')});
-    // });
+    try{
+      data = JSON.parse(data);
+    }catch (e){
+      console.log(e);
+      res.json({retcode:-1,retmsg:req.t('tips.jsonFormatErr')});
+      return;
+    }
+    data.updateTime = new Date();
+    db.simulators.update({_id: data._id}, data, {}, function(err, doc){
+      if(err){
+        console.log(err);
+        res.json({retcode:-1,retmsg:req.t('tips.saveFailed')});
+        return;
+      }
+      res.json({retcode:0,retmsg:req.t('tips.saveSuccess')});
+    });
   });
 
 /**

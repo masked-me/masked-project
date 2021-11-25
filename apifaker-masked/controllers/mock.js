@@ -91,7 +91,7 @@ module.exports = (keyAndTypeData,demoData) => new Promise((success, rej) => {
             
             function getTotals(curDome){
                 let jsonArrayLength = Array.isArray(curDome) ? Array.isArray(curDome.slice(-1)) ? curDome.slice(-1)[0] : {}: {};
-                let totals = typeof(jsonArrayLength) != 'object'? jsonArrayLength : Random.int(1, 20); //随机生成1-20条数据条数
+                let totals = typeof(jsonArrayLength) != 'object'? jsonArrayLength : Random.int(1, 10); //随机生成1-20条数据条数
                 return totals;
             }
         }

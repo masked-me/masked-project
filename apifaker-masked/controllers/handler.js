@@ -179,9 +179,7 @@ router.route('*')
       }else {
         if(matchedApi.type == 'json' || matchedApi.type.indexOf('json') > -1) {
           processReturnHolder(results.matchSimulator.simResults, query);
-          demo2mock(results).then((results) => {
-            res.jsonp(results.matchSimulator.simResults);
-          });
+          demo2mock(results, res)
         }else if(matchedApi.type == 'text'){
           res.type('text');
           res.send(results.matchSimulator.simResults);
@@ -195,12 +193,26 @@ router.route('*')
 
   });
   
-  async function demo2mock(obj) {
-    let res = obj.getByParams.results;
+  async function demo2mock(obj, res) {
+    let realId = obj.matchSimulator._id;
+    let results = obj.getByParams.results;
     let demo = obj.matchSimulator.simResults;
-    let proResults = await mockDataPromise(res, demo);
-    obj.matchSimulator.simResults = proResults;
-    return obj;
+    db.apiRealdata.findOne({_realid: realId},async (err,resObj)=>{
+      if(err){
+        console.log('err', err)
+        res.jsonp(obj.matchSimulator.simResults);
+        return obj
+      }
+      if(resObj == null){
+        await mockDataPromise(results, demo).then(proResults => {
+          obj.matchSimulator.simResults = proResults;
+          db.apiRealdata.insert({_realid:realId, value:JSON.stringify(proResults)})
+        })
+      }else{
+        obj.matchSimulator.simResults = JSON.parse(resObj.value)
+      }
+      res.jsonp(obj.matchSimulator.simResults);
+    })
   }
   
 
