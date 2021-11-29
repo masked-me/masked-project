@@ -1,16 +1,11 @@
-/*
- * @Author: pengyu.xu
- * @Date: 2021-11-21 10:13:41
- * @LastEditors: pengyu.xu
- * @LastEditTime: 2021-11-23 16:59:36
- * @Description:
- * @FilePath: \controllers\mock.js
- */
-
 var Mock = require('mockjs');
 let Random = Mock.Random;
 
-module.exports = (keyAndTypeData,demoData) => new Promise((success, rej) => {
+module.exports = (keyAndTypeData, demoData, needMock = false) => new Promise((success, rej) => {
+    if(!needMock) {
+        success(demoData)
+        return ;
+    } 
     //mock数据的几种基本类型
     let typeArr = {
         "int": "@integer(1000, 1000000000)",
@@ -64,7 +59,7 @@ module.exports = (keyAndTypeData,demoData) => new Promise((success, rej) => {
                         arrayData.push(arr[i])
                     }
                 }else{
-                    let arrayTotals = !!curDome[item.name].length ? str : Random.int(1, 20); //随机生成1-50条数据条数
+                    let arrayTotals = !!curDome[item.name].length ? str : Random.int(1, 10); //随机生成1-50条数据条数
                     for(let i = 0;i<arrayTotals;i++){
                         let arrayString = Mock.mock("@ctitle");
                         arrayData.push(arrayString);

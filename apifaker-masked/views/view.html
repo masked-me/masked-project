@@ -95,16 +95,108 @@
                     <%
                     apiInfo.results.forEach(function(v){
                     %>
-                    <tr>
-                        <td><%=v.name%></td>
-                        <td><%=v.type%></td>
-                        <td><%=v.desc%></td>
-                    </tr>
+                        <%
+                            if(v.obj){
+                        %>    
+                        <tr>
+                            <td><%=v.name%></td>
+                            <td><%=v.type%></td>
+                            <td class="tr-red">属性详解见下方</td>
+                        </tr>
+                        <%        
+                            } else {
+                        %>
+                            <tr>
+                                <td><%=v.name%></td>
+                                <td><%=v.type%></td>
+                                <td><%=v.desc%></td>
+                            </tr>
+                            
+                        <%        
+                            }
+                        %>
                     <%
                     });
                     %>
                     </tbody>
                 </table>
+                <%
+                let isShow = false 
+                apiInfo.results.forEach((v)=>{
+                    if(v.obj){
+                        isShow = true
+                    }
+                })
+                if(isShow){
+
+                    %>
+                    
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width: 120px;"><%=t('api.resultName')%></th>
+                        <th style="width: 60px;"><%=t('api.resultType')%></th>
+                        <th><%=t('api.resultDesc')%></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                    apiInfo.results.forEach(function(v){
+                    %>
+                        <%
+                         if(v.obj){ 
+
+                            %>
+                            
+                        <tr>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr class="tr-red">
+                            <td><%=v.name%></td>
+                            <td><%=v.type%></td>
+                            <td><%=v.desc%></td>
+                        </tr>
+                            <%
+                            v.obj.forEach(function(i){
+                        %>
+                            
+                        <%
+                            if(i.obj){
+                        %>    
+                        <tr>
+                            <td><%=i.name%></td>
+                            <td><%=v.type%></td>
+                            <td><%=v.desc%></td>
+                        </tr>
+                        <%        
+                            } else {
+                        %>
+                            <tr>
+                                <td><%=i.name%></td>
+                                <td><%=i.type%></td>
+                                <td><%=i.desc%></td>
+                            </tr>
+                            
+                        <%        
+                            }
+                        %>
+                        <%
+                         })}
+                        %>
+                    <%
+                    });
+                    %>
+                    </tbody>
+                </table>
+                    
+                    
+                    <%
+                }
+                
+                %>
+                
             </div>
         </div>
         <hr/>

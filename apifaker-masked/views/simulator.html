@@ -225,20 +225,10 @@
             return false;
         }
 
-        function displayButton(){
-            let displayArr = ['.jsoneditor-repair','.jsoneditor-sort','.jsoneditor-transform','.jsoneditor-sort','.jsoneditor-transform']
-            displayArr.forEach(item=>{
-                document.querySelectorAll(item).forEach(i=>{
-                    i.style.display = 'none';
-                })
-            })
-        }
-
         function init(){
             bindEvents();
             initParams();
             initEditors();
-            displayButton();
         }
 
         init();

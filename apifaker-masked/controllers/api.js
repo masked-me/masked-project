@@ -16,7 +16,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *
- * Copyright (c) 2014 ApiFaker, http://apifaker.com/
+ * Copyright (c) 2021 SCPMock, http://sinosun.com/
  *
  * @author  hylin, <admin@hylin.org>
  * @version 0.0.2
@@ -112,6 +112,7 @@ router.route('/apis/import')
    if (isCover == 'cover') {
      coverApi(data, req, res)
    } else if (isCover == 'add') {
+    //  console.log(JSON.stringify(data))
      addSimulators(data, req, res)
    }
  })
@@ -183,7 +184,9 @@ router.route('/apis/view/:id')
  .get(function (req, res) {
    var id = req.params.id;
    db.apiList.findOne({ _id: id, deleted: false },async function (err, doc) {
-    await mockDataPromise(doc.results,doc.demo).then(proResults=>{
+   
+    let needMock = true
+    await mockDataPromise(doc.results, doc.demo, needMock).then(proResults=>{
       doc.demo=proResults;
     })
      if (err) {

@@ -48,6 +48,12 @@ a, a:focus, a:visited{
 .editor-wrapper{
     position: relative;
 }
+.tr-red{
+    font-weight:bold;
+}
+.tr-blue{
+    font-weight:bold;
+}
 .btn-Center{
     padding: 3px 6px;
 }

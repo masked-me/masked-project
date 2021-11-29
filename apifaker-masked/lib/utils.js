@@ -16,7 +16,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *
- * Copyright (c) 2014 ApiFaker, http://apifaker.com/
+ * Copyright (c) 2021 SCPMock, http://sinosun.com/
  *
  * @author  hylin, <admin@hylin.org>
  * @version 0.0.2
