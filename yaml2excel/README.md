@@ -21,6 +21,7 @@
         方式二
 
         $node yaml2excel.js start
+        
         Input file directory: (需输入 yaml文件的绝对地址)
         Output file directory: (需输入 生成excek文件的目标绝对地址)
 
