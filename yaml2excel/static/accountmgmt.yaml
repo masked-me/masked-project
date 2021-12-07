@@ -1,0 +1,1795 @@
+swagger: "2.0"
+info:
+  description: "账户管理接口说明"
+  version: "1.0.0"
+  title: "账户管理"
+  termsOfService: ""
+  contact:
+    name: ""
+  license:
+    name: ""
+  x-java-interface: "cse.gen.ebankdev.accountmgmt.accountMangerEndPoint.AccountMgmtEndPointIntf"
+basePath: "/"
+tags:
+  - name: "accountmgmt"
+    description: "账户管理"
+  - name: "quota"
+    description: "限额管理"
+  - name: "trade"
+    description: "交易查询统计"
+  - name: "commonlyUsedAccount"
+    description: "常用账号"
+schemes:
+  - "https"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /addAccount:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "添加账户"
+      operationId: "addAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "添加账户请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/AddAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /bindAccount:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "绑定账户"
+      operationId: "bindAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "绑定账户请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/BindAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /checkIfOverAccountQuota:
+    post:
+      tags:
+        - "quota"
+      summary: "检查账户限额"
+      operationId: "checkIfOverAccountQuota"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "检查账户限额请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/CheckIfOverAccountQuotaRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseCheckIfOverAccountQuotaResult"
+  /checkIfOverAccountQuotaWithPolicy:
+    post:
+      tags:
+        - "quota"
+      summary: "检查账户限额"
+      operationId: "checkIfOverAccountQuotaWithPolicy"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "检查账户限额请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/CheckIfOverAccountQuotaWithPolicyRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseCheckIfOverAccountQuotaResult"
+  /delAddedAccountList:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "批量删除企业下账号"
+      operationId: "delAccountList"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "批量删除企业下账号"
+          required: true
+          schema:
+            $ref: "#/definitions/DelAddedAccountListRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /delAddedAccount:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "删除已添加账户"
+      operationId: "delAddedAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "删除已添加账户请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/DelAddedAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /delCommonlyUsedAccount:
+    post:
+      tags:
+        - "commonlyUsedAccount"
+      summary: "删除常用账号列表"
+      operationId: "delCommonlyUsedAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "删除常用账号请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/OptCommonlyUsedAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /delCpyAddedAccount:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "删除企业所有已添加账户"
+      operationId: "delCpyAddedAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "删除企业所有已添加账户请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/DelCpyAddedAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /listUserAccount:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "根据cpyId查询用户和账户信息表"
+      operationId: "findUseInfoAndAccountListByCpyId"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          required: true
+          schema:
+            $ref: "#/definitions/QueryUserAccountByCpyIdAndEbankIdListRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseUserAndAccountInfoRes"
+  /queryAccountInfo:
+    get:
+      tags:
+        - "accountmgmt"
+      summary: "查询账号详情"
+      operationId: "queryAccountInfo"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "cpyId"
+          in: "query"
+          description: "企业编号"
+          required: true
+          type: "string"
+        - name: "account"
+          in: "query"
+          description: "账号"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQueryAccountInfoResult"
+  /queryAccountInfoForBank:
+    get:
+      tags:
+        - "accountmgmt"
+      summary: "查询账号详情"
+      operationId: "queryAccountInfoForBank"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "account"
+          in: "query"
+          description: "账号"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQueryAccountInfoResult"
+  /queryAccountListByCstNo:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "根据企业客户号查询账号列表"
+      operationId: "queryAccountListByCstNo"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "查询账号列表请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/QueryAccountListByCstNoRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQueryAccountListByCstNoResult"
+  /queryAccountStatisForTime:
+    post:
+      tags:
+        - "trade"
+      summary: "查询企业账号统计信息(时间维度)"
+      operationId: "queryAccountStatisForTime"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "查询企业账号统计信息请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/AccountStaticInfoRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseAccountStaticInfoResponse"
+  /queryAccountTradeList:
+    post:
+      tags:
+        - "trade"
+      summary: "查询账号交易列表"
+      operationId: "queryAccountTradeList"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          required: true
+          schema:
+            $ref: "#/definitions/QueryAccountTradeListRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQueryAccountTradeListResult"
+  /queryCommonlyUsedAccount:
+    get:
+      tags:
+        - "commonlyUsedAccount"
+      summary: "查询常用账号列表"
+      operationId: "queryCommonlyUsedAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "ebankId"
+          in: "query"
+          description: "用户Id"
+          required: true
+          type: "string"
+        - name: "companyId"
+          in: "query"
+          description: "企业Id"
+          required: true
+          type: "string"
+        - name: "bankType"
+          in: "query"
+          description: "行内跨行标志"
+          required: false
+          type: "integer"
+          format: "int32"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseCommonlyUsedAccountResult"
+  /queryElectronicReDetail:
+    get:
+      tags:
+        - "commonlyUsedAccount"
+      summary: "电子回单详情查询"
+      operationId: "queryElectronicReDetail"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "tradUid"
+          in: "query"
+          description: "交易流水"
+          required: true
+          type: "string"
+        - name: "tradDate"
+          in: "query"
+          description: "交易日期"
+          required: true
+          type: "string"
+        - name: "flag"
+          in: "query"
+          description: "标志： 1-个人网银 2-企业网银"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQueryElectronicReDetail"
+  /queryElectronicReList:
+    post:
+      tags:
+        - "commonlyUsedAccount"
+      summary: "电子回单列表查询"
+      operationId: "queryElectronicReList"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "电子回单列表查询"
+          required: true
+          schema:
+            $ref: "#/definitions/QueryElectronicReListRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQueryElectronicReListTotalRes"
+  /queryLoanSignedAccountList:
+    get:
+      tags:
+        - "accountmgmt"
+      summary: "查询签约账户列表(好税贷)"
+      operationId: "queryLoanSignedAccountList"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "query"
+          description: "企业编号"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQuerySignedAccountListResult"
+  /querySignedAccountList:
+    get:
+      tags:
+        - "accountmgmt"
+      summary: "查询签约账户列表"
+      operationId: "querySignedAccountList"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "query"
+          description: "企业编号"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQuerySignedAccountListResult"
+  /queryUserBindAccounts:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "查询用户绑定账户"
+      operationId: "queryUserBindAccounts"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "查询绑定账户请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/QueryUserBindAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseQueryUserBindAccountResult"
+  /replaceCommonlyUsedAccount:
+    post:
+      tags:
+        - "commonlyUsedAccount"
+      summary: "替换常用账号"
+      operationId: "replaceCommonlyUsedAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "替换常用账号请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/OptCommonlyUsedAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /saveTradeFlow:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "保存交易流水"
+      operationId: "saveTradeFlow"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          required: true
+          schema:
+            $ref: "#/definitions/SaveTradeFlowRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /setDeductAccount:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "设置扣款账户"
+      operationId: "setDeductAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "设置扣款账户请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/SetDeductAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /updateUserAccountAll:
+    post:
+      tags:
+        - "accountmgmt"
+      summary: "全量绑定/修改企业用户账户列表 [service_role_DEFAULT]"
+      operationId: "updateUserAccountAll"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "request"
+          description: "绑定账户请求参数"
+          required: true
+          schema:
+            $ref: "#/definitions/BindAccountRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+definitions:
+  AccountQuotaInfo:
+    type: "object"
+    properties:
+      dailyAmountLimit:
+        type: "number"
+        description: "日累计限额"
+      singleAmountLimit:
+        type: "number"
+        description: "单笔限额"
+      yearAmountLimit:
+        type: "number"
+        description: "年累计限额"
+      dailyCountLimit:
+        type: "integer"
+        format: "int32"
+        description: "日累计笔数"
+    description: "账号的限额信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.AccountQuotaInfo"
+  AddAccountRequest:
+    type: "object"
+    required:
+      - "addAccountList"
+      - "cpyId"
+      - "cstNo"
+    properties:
+      cstNo:
+        type: "string"
+        description: "企业客户号"
+      cpyId:
+        type: "string"
+        description: "企业Id"
+      addAccountList:
+        type: "array"
+        description: "账号列表"
+        items:
+          $ref: "#/definitions/OneAddAccountRequest"
+    description: "添加账号请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.AddAccountRequest"
+  OneAddAccountRequest:
+    type: "object"
+    required:
+      - "account"
+      - "accountAuthList"
+      - "accountName"
+      - "accountType"
+      - "isDeductAccount"
+      - "quotaInfo"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      accountName:
+        type: "string"
+        description: "账号开户名称"
+      accountType:
+        type: "string"
+        description: "账户类型：1-基本户，2-一般户，3-临时户，4-专户，5-验资户"
+      accountAuthList:
+        type: "array"
+        description: "账号权限列表（1-查询权限; 2-付款权限）"
+        items:
+          type: "string"
+      quotaInfo:
+        description: "账号限额信息"
+        $ref: "#/definitions/AccountQuotaInfo"
+      isDeductAccount:
+        type: "string"
+        description: "是否为扣款账号（0：不是，1：是）"
+    description: "添加账号请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.OneAddAccountRequest"
+  ApiResponse:
+    type: "object"
+    properties:
+      result:
+        type: "object"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse"
+  ApiResponseObject:
+    type: "object"
+    properties:
+      result:
+        type: "object"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<java.lang.Object>"
+  BindAccountBaseInfo:
+    type: "object"
+    required:
+      - "accountList"
+      - "cpyId"
+      - "ebankId"
+    properties:
+      ebankId:
+        type: "string"
+        description: "用户ID"
+      cpyId:
+        type: "string"
+        description: "企业Id"
+      accountList:
+        type: "array"
+        description: "账户列表"
+        items:
+          type: "string"
+    description: "绑定账号请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.BindAccountBaseInfo"
+  BindAccountRequest:
+    type: "object"
+    required:
+      - "bindInfos"
+    properties:
+      bindInfos:
+        type: "array"
+        description: "绑定账号参数列表"
+        items:
+          $ref: "#/definitions/BindAccountBaseInfo"
+    description: "绑定账户请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.BindAccountRequest"
+  CheckIfOverAccountQuotaRequest:
+    type: "object"
+    required:
+      - "account"
+      - "amount"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      amount:
+        type: "number"
+        description: "交易金额"
+    description: "检查是否超过账户限额请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.CheckIfOverAccountQuotaRequest"
+  ApiResponseCheckIfOverAccountQuotaResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/CheckIfOverAccountQuotaResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.CheckIfOverAccountQuotaResult>"
+  CheckIfOverAccountQuotaResult:
+    type: "object"
+    required:
+      - "overQuotaType"
+    properties:
+      overQuotaType:
+        type: "integer"
+        format: "int32"
+        description: "超过限额的类型：1-未超过限额， 2-超过单日交易次数限额，3-超过日累计限额， 4- 超过单笔限额， 5-超过年累计限\
+          额，6-超过免硬件限额"
+    description: "检查是否超过账户限额响应结果"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.CheckIfOverAccountQuotaResult"
+  CheckIfOverAccountQuotaWithPolicyRequest:
+    type: "object"
+    required:
+      - "account"
+      - "amount"
+      - "checkPolicy"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      amount:
+        type: "number"
+        description: "交易金额"
+      checkPolicy:
+        description: "检查策略"
+        $ref: "#/definitions/CheckPolicy"
+    description: "制定策略，检查是否超过账户限额请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.CheckIfOverAccountQuotaWithPolicyRequest"
+  CheckPolicy:
+    type: "object"
+    properties:
+      dailyAmountLimit:
+        type: "boolean"
+        description: "日累计限额,默认不检查"
+      singleAmountLimit:
+        type: "boolean"
+        description: "单笔限额,默认不检查"
+      yearAmountLimit:
+        type: "boolean"
+        description: "年累计限额,默认不检查"
+      dailyCountLimit:
+        type: "boolean"
+        description: "日累计笔数,默认不检查"
+      unHardwareLimit:
+        type: "boolean"
+        description: "免硬件限额,默认不检查"
+    description: "限额检查策略"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.CheckPolicy"
+  DelAddedAccountListRequest:
+    type: "object"
+    required:
+      - "cpyId"
+      - "delAccountList"
+    properties:
+      cpyId:
+        type: "string"
+        description: "企业Id"
+      delAccountList:
+        type: "array"
+        description: "账号列表"
+        items:
+          type: "string"
+    description: "删除企业账号"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.DelAddedAccountListRequest"
+  DelAddedAccountRequest:
+    type: "object"
+    required:
+      - "account"
+      - "cpyId"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      cpyId:
+        type: "string"
+        description: "企业Id"
+    description: "删除已添加账户请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.DelAddedAccountRequest"
+  CommonUsedAccount:
+    type: "object"
+    required:
+      - "accountInfo"
+      - "bankType"
+      - "genre"
+    properties:
+      accountInfo:
+        description: "账号详情"
+        $ref: "#/definitions/CommonUsedAccountDetail"
+      type:
+        type: "integer"
+        format: "int32"
+        example: 0
+        description: "类型（0-账号，1-卡号），默认为0"
+      genre:
+        type: "integer"
+        format: "int32"
+        description: "种类（0-个人设置，1-企业设置）"
+      bankType:
+        type: "integer"
+        format: "int32"
+        description: "本行跨行（0-本行，1-跨行设置）"
+    description: "常用账号信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.CommonUsedAccount"
+  CommonUsedAccountDetail:
+    type: "object"
+    required:
+      - "account"
+      - "bankId"
+    properties:
+      account:
+        type: "string"
+        description: "账号/卡号"
+      accountName:
+        type: "string"
+        description: "账号/卡号名称"
+      bankId:
+        type: "string"
+        description: "所属银行Id"
+      bankName:
+        type: "string"
+        description: "所属银行名称"
+      branchId:
+        type: "string"
+        description: "开户网点Id"
+      branchName:
+        type: "string"
+        description: "开户网点名称"
+    description: "常用账号详情"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.CommonUsedAccountDetail"
+  OptCommonlyUsedAccountRequest:
+    type: "object"
+    required:
+      - "commonUsedAccountList"
+      - "companyId"
+      - "ebankId"
+    properties:
+      ebankId:
+        type: "string"
+        description: "操作人"
+      companyId:
+        type: "string"
+        description: "操作企业"
+      commonUsedAccountList:
+        type: "array"
+        description: "常用账号列表"
+        items:
+          $ref: "#/definitions/CommonUsedAccount"
+        maxItems: 2147483647
+        minItems: 1
+    description: "操作常用账号请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.OptCommonlyUsedAccountRequest"
+  DelCpyAddedAccountRequest:
+    type: "object"
+    required:
+      - "cpyId"
+    properties:
+      cpyId:
+        type: "string"
+        description: "企业Id"
+    description: "删除企业所有已添加账户请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.DelCpyAddedAccountRequest"
+  QueryUserAccountByCpyIdAndEbankIdListRequest:
+    type: "object"
+    required:
+      - "cpyId"
+    properties:
+      cpyId:
+        type: "string"
+        description: "企业Id"
+      ebankIdList:
+        type: "array"
+        description: "用户id列表"
+        items:
+          type: "string"
+    description: "查询企业用户绑定的账号列表"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryUserAccountByCpyIdAndEbankIdListRequest"
+  ApiResponseUserAndAccountInfoRes:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/UserAndAccountInfoRes"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.UserAndAccountInfoRes>"
+  CpyUserBindAccountDto:
+    type: "object"
+    properties:
+      ebankId:
+        type: "string"
+        description: "账号"
+      corpAccount:
+        type: "array"
+        description: "账号开户名称"
+        items:
+          $ref: "#/definitions/SimpleAccountInfo"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.UserAndAccountInfoRes$CpyUserBindAccountDto"
+  SimpleAccountInfo:
+    type: "object"
+    required:
+      - "account"
+      - "accountAuthList"
+      - "accountType"
+    properties:
+      accountName:
+        type: "string"
+      accountType:
+        type: "string"
+        description: "账户类型：1-基本户，2-一般户，3-临时户，4-专户，5-验资户"
+      accountAuthList:
+        type: "array"
+        description: "账号权限列表"
+        items:
+          type: "string"
+      account:
+        type: "string"
+        description: "账号"
+      isDeductAccount:
+        type: "string"
+        description: "是否时扣款帐户， 扣款账户状态（0：不是，1：是）"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.UserAndAccountInfoRes$SimpleAccountInfo"
+  UserAndAccountInfoRes:
+    type: "object"
+    properties:
+      cpyUserBindAccountList:
+        type: "array"
+        description: "企业用户绑定账号列表"
+        items:
+          $ref: "#/definitions/CpyUserBindAccountDto"
+    description: "用户和账号信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.UserAndAccountInfoRes"
+  ApiResponseQueryAccountInfoResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/QueryAccountInfoResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountInfoResult>"
+  QueryAccountInfoResult:
+    type: "object"
+    required:
+      - "account"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      dailyAmountLimit:
+        type: "number"
+        description: "日累计限额"
+      singleAmountLimit:
+        type: "number"
+        description: "单笔限额"
+      yearAmountLimit:
+        type: "number"
+        description: "年累计限额"
+      dailyCountLimit:
+        type: "integer"
+        format: "int32"
+        description: "日累计笔数"
+      unHardwareLimit:
+        type: "number"
+        description: "免硬件限额"
+      bankId:
+        type: "string"
+        description: "所属银行Id"
+      bankName:
+        type: "string"
+        description: "所属银行名称"
+      branchId:
+        type: "string"
+        description: "开户网点Id"
+      branchName:
+        type: "string"
+        description: "开户网点名称"
+      cstNo:
+        type: "string"
+        description: "客户号"
+      accountBalance:
+        type: "number"
+        description: "账户余额"
+      availableBal:
+        type: "number"
+        description: "可用余额"
+      blockedBalance:
+        type: "number"
+        description: "冻结余额"
+      accountProperty:
+        type: "string"
+        description: "账户属性"
+      accountName:
+        type: "string"
+        description: "账号开户名称"
+        readOnly: true
+      openTime:
+        type: "integer"
+        format: "int64"
+        description: "开户时间"
+        readOnly: true
+      currency:
+        type: "string"
+        description: "币种"
+        readOnly: true
+      accountType:
+        type: "integer"
+        format: "int32"
+        description: "账户类型：1-基本户，2-一般户，3-临时户，4-专户，5-验资户"
+      accountStatus:
+        type: "string"
+        description: "账户状态：1-正常，2-已销户"
+      depositType:
+        type: "integer"
+        format: "int32"
+        description: "存款类型：1-活期，2-定期"
+    description: "查询账号详情响应结果"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountInfoResult"
+  QueryAccountListByCstNoRequest:
+    type: "object"
+    required:
+      - "cpyId"
+      - "cstNo"
+    properties:
+      cstNo:
+        type: "string"
+      cpyId:
+        type: "string"
+        description: "企业Id"
+    description: "根据企业客户号查询账号列表请求参数类"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountListByCstNoRequest"
+  AccountBaseInfoDto:
+    type: "object"
+    required:
+      - "account"
+      - "accountName"
+      - "accountType"
+      - "bankName"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      accountName:
+        type: "string"
+        description: "账号开户名称"
+      accountType:
+        type: "string"
+        description: "账户类型：1-基本户，2-一般户，3-临时户，4-专户，5-验资户"
+      bankName:
+        type: "string"
+        description: "所属银行名称"
+      status:
+        type: "string"
+        description: "状态"
+      optType:
+        type: "string"
+        description: "操作类型（1：已添加，2：已选中）"
+    description: "账户基本信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.AccountBaseInfoDto"
+  AddedAccountInfoDto:
+    type: "object"
+    required:
+      - "account"
+      - "accountAuthList"
+      - "accountName"
+      - "accountType"
+      - "isDeductAccount"
+      - "quotaInfo"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      accountName:
+        type: "string"
+        description: "账号开户名称"
+      accountType:
+        type: "string"
+        description: "账户类型：1-基本户，2-一般户，3-临时户，4-专户，5-验资户"
+      accountAuthList:
+        type: "array"
+        description: "账号权限列表"
+        items:
+          type: "string"
+      quotaInfo:
+        description: "账号限额信息"
+        $ref: "#/definitions/AccountQuotaInfo"
+      isDeductAccount:
+        type: "string"
+        description: "状态（0：不是，1：是）"
+      accountBalance:
+        type: "number"
+        description: "账户余额"
+    description: "已添加的账号信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.AddedAccountInfoDto"
+  ApiResponseQueryAccountListByCstNoResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/QueryAccountListByCstNoResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountListByCstNoResult>"
+  QueryAccountListByCstNoResult:
+    type: "object"
+    required:
+      - "accountList"
+    properties:
+      accountList:
+        type: "array"
+        description: "账号列表"
+        items:
+          $ref: "#/definitions/AccountBaseInfoDto"
+      addedAccountList:
+        type: "array"
+        description: "已添加账号列表"
+        items:
+          $ref: "#/definitions/AddedAccountInfoDto"
+    description: "查询账号列表响应结果"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountListByCstNoResult"
+  AccountStaticInfoRequest:
+    type: "object"
+    required:
+      - "account"
+      - "cpyId"
+      - "endTime"
+      - "startTime"
+    properties:
+      cpyId:
+        type: "string"
+        description: "企业编号"
+      account:
+        type: "string"
+        description: "账号"
+      startTime:
+        type: "integer"
+        format: "int64"
+        description: "开始时间， 10位的时间戳"
+      endTime:
+        type: "integer"
+        format: "int64"
+        description: "结束时间， 10位的时间戳"
+    description: "账户统计信息请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.AccountStaticInfoRequest"
+  AccountStaticInfoResponse:
+    type: "object"
+    required:
+      - "account"
+      - "accountName"
+      - "endTime"
+      - "startTime"
+      - "totalCost"
+      - "totalIncome"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      accountName:
+        type: "string"
+        description: "账号名称"
+      totalIncome:
+        type: "number"
+        description: "总收入"
+      totalCost:
+        type: "number"
+        description: "总支出"
+      startTime:
+        type: "integer"
+        format: "int64"
+        description: "统计开始时间"
+      endTime:
+        type: "integer"
+        format: "int64"
+        description: "统计结束时间"
+    description: "账户统计信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.AccountStaticInfoResponse"
+  ApiResponseAccountStaticInfoResponse:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/AccountStaticInfoResponse"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.AccountStaticInfoResponse>"
+  QueryAccountTradeListRequest:
+    type: "object"
+    required:
+      - "account"
+      - "companyId"
+      - "endTime"
+      - "pageNum"
+      - "pageSize"
+      - "startTime"
+      - "type"
+    properties:
+      companyId:
+        type: "string"
+        description: "企业编号"
+      account:
+        type: "string"
+        description: "账号"
+      startTime:
+        type: "string"
+        description: "开始时间(10位时间戳)"
+      endTime:
+        type: "string"
+        description: "结束时间(10位时间戳)"
+      type:
+        type: "integer"
+        format: "int32"
+        description: "交易类型：0：全部类型，1：支出，2：收入"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "当前页数"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "每页记录数"
+    description: "查询账号交易列表请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountTradeListRequest"
+  ApiResponseQueryAccountTradeListResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/QueryAccountTradeListResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountTradeListResult>"
+  QueryAccountTradeListResult:
+    type: "object"
+    required:
+      - "account"
+      - "accountName"
+      - "pageNum"
+      - "pageSize"
+      - "pages"
+      - "total"
+      - "totalBalance"
+      - "totalCost"
+      - "totalIncome"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总记录数"
+      pages:
+        type: "integer"
+        format: "int32"
+        description: "总页数"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "每页记录数"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "当前页数"
+      account:
+        type: "string"
+        description: "账号"
+      accountName:
+        type: "string"
+        description: "账号名称"
+      totalBalance:
+        type: "integer"
+        format: "int64"
+        description: "账户余额"
+      totalIncome:
+        type: "integer"
+        format: "int64"
+        description: "总收入"
+      totalCost:
+        type: "integer"
+        format: "int64"
+        description: "总支出"
+      tradeList:
+        type: "array"
+        description: "交易列表"
+        items:
+          $ref: "#/definitions/TradeInfo"
+    description: "查询账号交易列表响应结果"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryAccountTradeListResult"
+  TradeInfo:
+    type: "object"
+    required:
+      - "money"
+      - "otherAccount"
+      - "otherName"
+      - "tradeId"
+      - "tradeTime"
+    properties:
+      tradeId:
+        type: "string"
+        description: "交易凭证号"
+      tradeTime:
+        type: "integer"
+        format: "int64"
+        description: "交易时间"
+      tradeKind:
+        type: "integer"
+        format: "int32"
+        description: "业务类型：1. 取现 2. 代发工资 3. 行内转账 4. 跨行转账 5. 理财产品 6. 数字支票 9. 电子缴税"
+      tradeType:
+        type: "integer"
+        format: "int32"
+        description: "交易类型: 1-支出，2-收入"
+      otherAccount:
+        type: "string"
+        description: "对方账户"
+      otherName:
+        type: "string"
+        description: "对方账户名称"
+      otherBranchName:
+        type: "string"
+        description: "对方开户银行"
+      mark:
+        type: "string"
+        description: "交易摘要"
+      money:
+        type: "integer"
+        format: "int64"
+        description: "交易金额"
+      balance:
+        type: "integer"
+        format: "int64"
+        description: "账号余额"
+      payerNote:
+        type: "string"
+        description: "附言"
+      note:
+        type: "string"
+        description: "备注"
+    description: "交易信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.TradeInfo"
+  ApiResponseCommonlyUsedAccountResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/CommonlyUsedAccountResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.CommonlyUsedAccountResult>"
+  CommonlyUsedAccountResult:
+    type: "object"
+    required:
+      - "commonUsedAccountList"
+    properties:
+      commonUsedAccountList:
+        type: "array"
+        description: "常用账号列表"
+        items:
+          $ref: "#/definitions/CommonUsedAccount"
+    description: "常用账号信息列表"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.CommonlyUsedAccountResult"
+  ApiResponseQueryElectronicReDetail:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/QueryElectronicReDetail"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryElectronicReDetail>"
+  QueryElectronicReDetail:
+    type: "object"
+    properties:
+      payAccount:
+        type: "string"
+        description: "付款账号"
+      payAcctName:
+        type: "string"
+        description: "付款人名"
+      recAccount:
+        type: "string"
+        description: "收款人账号"
+      recAcctName:
+        type: "string"
+        description: "收款人名称"
+      recBankId:
+        type: "string"
+        description: "收款人行号"
+      recBankName:
+        type: "string"
+        description: "收款人行名"
+      pay:
+        type: "string"
+        description: "付款金额"
+      currency:
+        type: "string"
+        description: "币种"
+      charge:
+        type: "string"
+        description: "手续费"
+      inUse:
+        type: "string"
+        description: "付款用途"
+      tradAttachMent:
+        type: "string"
+        description: "交易附言"
+      tradUid:
+        type: "string"
+        description: "交易流水"
+      accessToken:
+        type: "string"
+        description: "授权码"
+      payBankId:
+        type: "string"
+        description: "付款人行号"
+      payBankName:
+        type: "string"
+        description: "付款人行名"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryElectronicReDetail"
+  QueryElectronicReListRequest:
+    type: "object"
+    properties:
+      customId:
+        type: "string"
+        description: "客户号"
+      bizmateId:
+        type: "string"
+        description: "用户Id"
+      beginDate:
+        type: "string"
+        description: "起始日期"
+      endDate:
+        type: "string"
+        description: "截止日期"
+      backFlag:
+        type: "string"
+        description: "回单标志"
+      payAccount:
+        type: "string"
+        description: "付款账号"
+      payAcctName:
+        type: "string"
+        description: "付款人户名"
+      recAccount:
+        type: "string"
+        description: "收款账号"
+      recAcctName:
+        type: "string"
+        description: "收款人户名"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "页码"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "页数"
+    description: "查询电子回单列表参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryElectronicReListRequest"
+  ApiResponseQueryElectronicReListTotalRes:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/QueryElectronicReListTotalRes"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryElectronicReListTotalRes>"
+  QueryElectronicReListResult:
+    type: "object"
+    properties:
+      payAccount:
+        type: "string"
+        description: "付款账号"
+      payAcctName:
+        type: "string"
+        description: "付款人名"
+      recAccount:
+        type: "string"
+        description: "收款人账号"
+      recAcctName:
+        type: "string"
+        description: "收款人名称"
+      tradPay:
+        type: "string"
+        description: "交易金额"
+      channelId:
+        type: "string"
+        description: "渠道标识"
+      tradTime:
+        type: "string"
+        description: "交易时间"
+      tradType:
+        type: "string"
+        description: "交易类型：3-行内转账\n4-跨行转账\nIBPS跨行转账"
+      tradDate:
+        type: "string"
+        description: "交易日期"
+      tradUid:
+        type: "string"
+        description: "交易流水"
+    description: "查询电子回单列表结果"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryElectronicReListResult"
+  QueryElectronicReListTotalRes:
+    type: "object"
+    required:
+      - "pageNum"
+      - "pageSize"
+      - "pages"
+      - "total"
+    properties:
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总记录数"
+      pages:
+        type: "integer"
+        format: "int32"
+        description: "总页数"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "每页记录数"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "当前页数"
+      electronicReList:
+        type: "array"
+        description: "电子回单列表"
+        items:
+          $ref: "#/definitions/QueryElectronicReListResult"
+    description: "查询电子回单列表响应结果"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryElectronicReListTotalRes"
+  AccountBaseInfo:
+    type: "object"
+    properties:
+      account:
+        type: "string"
+      currency:
+        type: "string"
+      accountName:
+        type: "string"
+      availableBal:
+        type: "number"
+      branchId:
+        type: "string"
+      branchName:
+        type: "string"
+      bankName:
+        type: "string"
+      cstNo:
+        type: "string"
+      bankId:
+        type: "string"
+      password:
+        type: "string"
+      city:
+        type: "string"
+      blockedBalance:
+        type: "number"
+      baseAccountFlag:
+        type: "integer"
+        format: "int32"
+      accountType:
+        type: "integer"
+        format: "int32"
+      openTime:
+        type: "integer"
+        format: "int64"
+      accountStatus:
+        type: "string"
+      clientType:
+        type: "string"
+      chClientName:
+        type: "string"
+      accountProperty:
+        type: "string"
+      accountBalance:
+        type: "number"
+      allowDepInd:
+        type: "string"
+      allowDraInd:
+        type: "string"
+      payPwdInd:
+        type: "string"
+      singleLimit:
+        type: "number"
+      dayLimit:
+        type: "number"
+      actualBanlance:
+        type: "number"
+      openBrc:
+        type: "string"
+      brcName:
+        type: "string"
+      phone:
+        type: "string"
+      subAccountSerialNo:
+        type: "string"
+      depositTypeDesc:
+        type: "string"
+      depositType:
+        type: "integer"
+        format: "int32"
+      statusDesc:
+        type: "string"
+      companyId:
+        type: "string"
+      companyNo:
+        type: "string"
+      createTime:
+        type: "string"
+        format: "date-time"
+      updateTime:
+        type: "string"
+        format: "date-time"
+      sysValid:
+        type: "integer"
+        format: "int32"
+      instcode:
+        type: "string"
+      oneBrcName:
+        type: "string"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.dto.AccountBaseInfo"
+  ApiResponseQuerySignedAccountListResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/QuerySignedAccountListResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.QuerySignedAccountListResult>"
+  QuerySignedAccountListResult:
+    type: "object"
+    properties:
+      accountBaseInfos:
+        type: "array"
+        description: "账户信息列表"
+        items:
+          $ref: "#/definitions/AccountBaseInfo"
+    description: "查询签约用户账号信息"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QuerySignedAccountListResult"
+  QueryUserBindAccountRequest:
+    type: "object"
+    required:
+      - "cpyId"
+      - "ebankId"
+    properties:
+      ebankId:
+        type: "string"
+        description: "用户ID"
+      cpyId:
+        type: "string"
+        description: "企业Id"
+    description: "查询用户绑定的账号请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryUserBindAccountRequest"
+  ApiResponseQueryUserBindAccountResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/QueryUserBindAccountResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.ApiResponse<com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryUserBindAccountResult>"
+  QueryUserBindAccountResult:
+    type: "object"
+    properties:
+      addedAccountList:
+        type: "array"
+        description: "已绑定账号列表"
+        items:
+          $ref: "#/definitions/AddedAccountInfoDto"
+    description: "查询用户绑定账号响应结果"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.QueryUserBindAccountResult"
+  SaveTradeFlowRequest:
+    type: "object"
+    required:
+      - "account"
+      - "amount"
+      - "bankTradeId"
+      - "cardNumber"
+      - "chargAmount"
+      - "companyId"
+      - "companyNo"
+      - "flowId"
+      - "otherAccount"
+      - "tradeTime"
+      - "tradeType"
+    properties:
+      flowId:
+        type: "string"
+        description: "业务表单ID"
+      bankTradeId:
+        type: "string"
+        description: "银行交易ID"
+      account:
+        type: "string"
+        description: "账号"
+      cardNumber:
+        type: "string"
+        description: "卡号"
+      tradeType:
+        type: "integer"
+        format: "int32"
+        description: "交易类型， 1-支出 2-收入"
+      businessType:
+        type: "integer"
+        format: "int32"
+        description: "业务类型"
+      amount:
+        type: "number"
+        description: "交易金额"
+      otherAccount:
+        type: "string"
+        description: "其他账号"
+      chargAmount:
+        type: "number"
+        description: "手续费"
+      companyId:
+        type: "string"
+        description: "企业Id"
+      companyNo:
+        type: "string"
+        description: "企业客户号"
+      mark:
+        type: "string"
+        description: "备注信息"
+      tradeTime:
+        type: "string"
+        format: "date-time"
+        description: "交易时间"
+      tradeStatus:
+        type: "integer"
+        format: "int32"
+        description: "交易状态：0：进行中，1：交易成功，2：交易失败"
+    description: "保存交易流水请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.SaveTradeFlowRequest"
+  SetDeductAccountRequest:
+    type: "object"
+    required:
+      - "account"
+      - "cpyId"
+    properties:
+      account:
+        type: "string"
+        description: "账号"
+      cpyId:
+        type: "string"
+        description: "企业Id"
+    description: "设置企业扣款账户请求参数"
+    x-java-class: "com.sinosun.bizmate.ace.backend.accountmgmt.model.SetDeductAccountRequest"

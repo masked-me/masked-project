@@ -1,0 +1,24 @@
+{
+  "name": "yaml2excel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "j2c": "bin/j2c.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^8.3.0",
+    "js-yaml": "^4.1.0",
+    "node-xlsx": "^0.17.2",
+    "xlsx": "^0.17.4",
+    "xlsx-style": "^0.8.13"
+  }
+}
