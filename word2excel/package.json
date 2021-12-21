@@ -1,0 +1,23 @@
+{
+  "name": "word2excel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "adm-zip": "^0.5.9",
+    "mammoth": "^1.4.19",
+    "node-xlsx": "^0.17.2",
+    "officegen": "^0.6.5",
+    "xlsx": "^0.17.4",
+    "xlsx-style": "^0.8.13"
+  },
+  "dependencies": {
+    "@sinosun/lib": "^1.1.8"
+  }
+}
