@@ -18,7 +18,9 @@ const textRight = baseContent.textRight;
 
 // 获取yaml数据转json
 function yaml2json() {
-  let doc = yaml.load(fs.readFileSync("../static/accountmgmt.yaml", "utf8"));
+  let doc = yaml.load(
+    fs.readFileSync("../static/form.yaml", "utf8")
+  );
   return doc;
 }
 
@@ -103,13 +105,22 @@ function getDataList(paths) {
       // 接口类型
       type,
       // 接口用途
-      use: item[type].summary.replace(/\[.*?\]/g, () => {
-        return "";
-      }),
+      use: item[type].summary
+        ? item[type].summary.replace(/\[.*?\]/g, () => {
+            return "";
+          })
+        : "暂无",
       // 请求体
       request:
         type == "post"
-          ? item[type].parameters[0].schema.$ref.replace("#/definitions/", "")
+          ? item[type].parameters[0]
+            ? item[type].parameters[0].schema
+              ? item[type].parameters[0].schema.$ref.replace(
+                  "#/definitions/",
+                  ""
+                )
+              : item[type].parameters
+            : item[type].parameters
           : item[type].parameters,
       // 响应体
       response: item[type].responses["200"].schema.$ref.replace(
@@ -131,7 +142,7 @@ function getDataList(paths) {
 
 // 获取真实请求、响应内容,并设置realType(数据真实类型)
 function getRealRequest(name, type = "json") {
-  let obj = definitions[name];
+  let obj = definitions[name] || name;
   obj && (obj["realType"] = type);
   return obj;
 }
@@ -221,29 +232,31 @@ function getMockData(i) {
   return [res, res, res];
 }
 
+// 递归函数
+function recursive(cur, bArr) {
+  let responseArr = Object.keys(cur).map((i) => {
+    return [
+      { v: i, s: borderStyle },
+      { v: transType(cur[i]), s: borderStyle },
+      { v: "可选", s: borderStyle },
+      { v: transDescription(i), s: borderStyle },
+      ...getMockData(i),
+    ];
+  });
+  bArr.push(...responseArr);
+  responseArr.forEach((i) => {
+    if (typeof i[1]["v"] !== "string") {
+      bArr.push([]);
+      bArr.push([i[0]["v"]]);
+      recursive(i[1]["v"].properties, bArr);
+    }
+  });
+}
+
 // 递归获取响应内容数组
 function getResponseArr(item) {
   let boxArr = [];
-  const recursive = (cur, bArr) => {
-    let responseArr = Object.keys(cur).map((i) => {
-      return [
-        { v: i, s: borderStyle },
-        { v: transType(cur[i]), s: borderStyle },
-        { v: "可选", s: borderStyle },
-        { v: transDescription(i), s: borderStyle },
-        ...getMockData(i),
-      ];
-    });
-    bArr.push(...responseArr);
-    responseArr.forEach((i) => {
-      if (typeof i[1]["v"] !== "string") {
-        bArr.push([]);
-        bArr.push([i[0]["v"]]);
-        recursive(i[1]["v"].properties, bArr);
-      }
-    });
-  };
-  recursive(item.realResponse.properties, boxArr);
+  recursive((item.realResponse || {}).properties || {}, boxArr);
   return boxArr;
 }
 
@@ -261,27 +274,30 @@ function getRequestArr(item) {
       ];
     });
   } else {
-    let boxArr = [];
-    const recursive = (cur, bArr) => {
-      let responseArr = Object.keys(cur).map((i) => {
-        return [
-          { v: i, s: borderStyle },
-          { v: transType(cur[i]), s: borderStyle },
-          { v: "可选", s: borderStyle },
-          { v: transDescription(i), s: borderStyle },
-        ];
-      });
-      bArr.push(...responseArr);
-      responseArr.forEach((i) => {
-        if (typeof i[1]["v"] !== "string") {
-          bArr.push([]);
-          bArr.push([i[0]["v"]]);
-          recursive(i[1]["v"].properties, bArr);
+    // 复杂类型处理
+    if (Array.isArray(item.realRequest)) {
+      item.realRequest.forEach((items) => {
+        if (items.schema) {
+          let boxArr = [];
+          let realRequest = getRealRequest(
+            items.schema.$ref.replace("#/definitions/", "")
+          );
+          recursive(realRequest.properties || {}, boxArr);
+          requestArr.push(...boxArr);
+        } else {
+          requestArr.push([
+            { v: items.name, s: borderStyle },
+            { v: items.type, s: borderStyle },
+            { v: items.required ? "必填" : "可选", s: borderStyle },
+            { v: `位置：${items.in}`, s: borderStyle },
+          ]);
         }
       });
-    };
-    recursive(item.realRequest.properties, boxArr);
-    requestArr = boxArr;
+    } else {
+      let boxArr = [];
+      recursive((item.realRequest || {}).properties || {}, boxArr);
+      requestArr = boxArr;
+    }
   }
   return requestArr;
 }
@@ -328,6 +344,7 @@ function mergeData(dList) {
     data.push(...baseContent.response);
     // 数据拼接 响应参数
     let responseArr = getResponseArr(item);
+    console.log('responseArr',JSON.stringify(responseArr))
     data.push(...responseArr);
     // 数据拼接 结尾
     data.push(...baseContent.end);

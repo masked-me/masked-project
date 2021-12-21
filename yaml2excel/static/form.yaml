@@ -1,0 +1,1057 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "swagger definition for com.sinosun.ebank.backend.approval.endpoint.FormEndpoint"
+  x-java-interface: "cse.gen.ebankdev.approval.form.FormEndpointIntf"
+basePath: "/"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /addForms:
+    post:
+      operationId: "addOrUpdForms"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/AddFormRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseResponse"
+  /delForm:
+    post:
+      operationId: "delForm"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/DelFormRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseResponse"
+  /deleteLocation:
+    post:
+      operationId: "deleteLocation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "app"
+        required: true
+        schema:
+          $ref: "#/definitions/DeleteLocationRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  /findFormField:
+    post:
+      operationId: "findFormField"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/FindFormFieldRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseFindFormFieldResponseAllOfResult"
+  /listFormByLocation:
+    post:
+      operationId: "listAppByLocationId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "app"
+        required: true
+        schema:
+          $ref: "#/definitions/ListAppByLocationRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListAppByLocationResponseResult"
+  /listDetailByCompanyId:
+    post:
+      operationId: "listDetailByCompanyId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/ListDetailByCompanyIdRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListFormDetailResponseAllOfResult"
+  /listForm:
+    post:
+      operationId: "listForm"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/ListFormRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListFormResponse"
+  /listFormDetail:
+    post:
+      operationId: "listFormDetail"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/DelFormRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListFormDetailResponseAllOfResult"
+  /listFormFlowMgmt:
+    post:
+      operationId: "listFormFlowMgmt"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/CompanyIdRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListFormFlowMgmtResponse"
+  /listGroupTable:
+    get:
+      operationId: "listGroupTable"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "pageNum"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "pageSize"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "groupName"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListGroupTableResponseResult"
+  /listLocationTable:
+    get:
+      operationId: "listLocationTable"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "pageNum"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "pageSize"
+        in: "query"
+        required: false
+        type: "integer"
+        format: "int32"
+      - name: "locationName"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListLocationTableResponseResult"
+  /saveLocation:
+    post:
+      operationId: "saveLocation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "app"
+        required: true
+        schema:
+          $ref: "#/definitions/SaveLocationRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseResponse"
+  /setFormLocation:
+    post:
+      operationId: "setAppLocation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "app"
+        required: true
+        schema:
+          $ref: "#/definitions/SetAppLocationRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  /setAssociationApp:
+    post:
+      operationId: "setAssociationApp"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/AssociationRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseResponse"
+  /setVisible:
+    post:
+      operationId: "setVisible"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "param"
+        required: true
+        schema:
+          $ref: "#/definitions/SetVisibleRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseResponse"
+  /updateFormStatus:
+    post:
+      operationId: "updateFormStatus"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateFormStatusRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+  /updateLocation:
+    post:
+      operationId: "updateLocation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "app"
+        required: true
+        schema:
+          $ref: "#/definitions/FormUpdateLocationRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseResponse"
+definitions:
+  AddFormRequest:
+    type: "object"
+    required:
+    - "companyId"
+    properties:
+      companyId:
+        type: "string"
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormVo"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.AddFormRequest"
+  FormVo:
+    type: "object"
+    required:
+    - "content"
+    - "formName"
+    - "formType"
+    - "isEdit"
+    - "logoUrl"
+    properties:
+      belongTo:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+        maximum: 2
+      formName:
+        type: "string"
+      logoUrl:
+        type: "string"
+      remark:
+        type: "string"
+      instruction:
+        type: "string"
+      screenshotList:
+        type: "array"
+        items:
+          type: "string"
+      content:
+        type: "string"
+      analysisKeyInfo:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormVoAnalysisKeyInfo"
+      mappedInfo:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormVoMappedInfo"
+      formType:
+        type: "string"
+      isEdit:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 1
+      formId:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FormVo"
+  FormVoAnalysisKeyInfo:
+    type: "object"
+    required:
+    - "analysisKey"
+    - "analysisName"
+    - "analysisType"
+    - "isCondition"
+    - "isDataTitle"
+    properties:
+      analysisKey:
+        type: "string"
+      analysisName:
+        type: "string"
+      analysisType:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+        maximum: 4
+      isCondition:
+        type: "integer"
+        format: "int32"
+      isDataTitle:
+        type: "integer"
+        format: "int32"
+      analysisTypeContent:
+        type: "string"
+      keyOrder:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FormVoAnalysisKeyInfo"
+  FormVoMappedInfo:
+    type: "object"
+    required:
+    - "mappedStatus"
+    - "mappedType"
+    properties:
+      mappedKey:
+        type: "string"
+      mappedValue:
+        type: "string"
+      mappedStatus:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 1
+      mappedType:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+        maximum: 4
+      mappedTypeContent:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FormVoMappedInfo"
+  ApiResponse:
+    type: "object"
+    properties:
+      result:
+        type: "object"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse"
+  ApiResponseResponse:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/Response"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.approval.Response>"
+  Response:
+    type: "object"
+    properties:
+      resultCode:
+        type: "integer"
+        format: "int32"
+      resultMessage:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.approval.Response"
+  DelFormRequest:
+    type: "object"
+    properties:
+      formIdList:
+        type: "array"
+        items:
+          type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.DelFormRequest"
+  DeleteLocationRequest:
+    type: "object"
+    properties:
+      locationIdList:
+        type: "array"
+        items:
+          type: "integer"
+          format: "int64"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.DeleteLocationRequest"
+  FindFormFieldRequest:
+    type: "object"
+    required:
+    - "companyId"
+    - "formId"
+    properties:
+      formId:
+        type: "string"
+      companyId:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FindFormFieldRequest"
+  ApiResponseFindFormFieldResponseAllOfResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/FindFormFieldResponseAllOfResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.form.FindFormFieldResponseAllOfResult>"
+  FindFormFieldResponseAllOfResult:
+    type: "object"
+    properties:
+      dynFilterFields:
+        type: "array"
+        items:
+          $ref: "#/definitions/FindFormFieldResponseAllOfResultDynFilterFields"
+      staticFilterFields:
+        $ref: "#/definitions/FindFormFieldResponseAllOfResultStaticFilterFields"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FindFormFieldResponseAllOfResult"
+  FindFormFieldResponseAllOfResultDynFilterFields:
+    type: "object"
+    properties:
+      analysisKey:
+        type: "string"
+      analysisName:
+        type: "string"
+      analysisType:
+        type: "integer"
+        format: "int32"
+      isCondition:
+        type: "integer"
+        format: "int32"
+      isDataTitle:
+        type: "integer"
+        format: "int32"
+      analysisTypeContent:
+        type: "string"
+      keyOrder:
+        type: "integer"
+        format: "int32"
+      value:
+        type: "array"
+        items:
+          $ref: "#/definitions/FindFormFieldResponseAllOfResultValue"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FindFormFieldResponseAllOfResultDynFilterFields"
+  FindFormFieldResponseAllOfResultStaticFilterFields:
+    type: "object"
+    properties:
+      statusList:
+        type: "array"
+        items:
+          $ref: "#/definitions/FindFormFieldResponseAllOfResultStaticFilterFieldsStatusList"
+      applyTime:
+        $ref: "#/definitions/FindFormFieldResponseAllOfResultStaticFilterFieldsApplyTime"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FindFormFieldResponseAllOfResultStaticFilterFields"
+  FindFormFieldResponseAllOfResultStaticFilterFieldsApplyTime:
+    type: "object"
+    properties:
+      beginTime:
+        type: "integer"
+        format: "int64"
+      endTime:
+        type: "integer"
+        format: "int64"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FindFormFieldResponseAllOfResultStaticFilterFieldsApplyTime"
+  FindFormFieldResponseAllOfResultStaticFilterFieldsStatusList:
+    type: "object"
+    properties:
+      value:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FindFormFieldResponseAllOfResultStaticFilterFieldsStatusList"
+  FindFormFieldResponseAllOfResultValue:
+    type: "object"
+    properties:
+      typeName:
+        type: "string"
+      typeValue:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FindFormFieldResponseAllOfResultValue"
+  ListAppByLocationRequest:
+    type: "object"
+    properties:
+      locationIdList:
+        type: "array"
+        items:
+          type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListAppByLocationRequest"
+  ApiResponseListAppByLocationResponseResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/ListAppByLocationResponseResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.form.ListAppByLocationResponseResult>"
+  AppBasicInfo:
+    type: "object"
+    properties:
+      formId:
+        type: "string"
+      formName:
+        type: "string"
+      logoUrl:
+        type: "string"
+      openStatus:
+        type: "integer"
+        format: "int32"
+      formType:
+        type: "string"
+      visible:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.AppBasicInfo"
+  ListAppByLocationResponseResult:
+    type: "object"
+    properties:
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/LocationAppItem"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListAppByLocationResponseResult"
+  LocationAppItem:
+    type: "object"
+    properties:
+      locationId:
+        type: "string"
+      formList:
+        type: "array"
+        items:
+          $ref: "#/definitions/AppBasicInfo"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.LocationAppItem"
+  ListDetailByCompanyIdRequest:
+    type: "object"
+    required:
+    - "companyId"
+    properties:
+      companyId:
+        type: "string"
+      openStatus:
+        type: "integer"
+        format: "int32"
+      formType:
+        type: "array"
+        items:
+          type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListDetailByCompanyIdRequest"
+  ApiResponseListFormDetailResponseAllOfResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/ListFormDetailResponseAllOfResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.form.ListFormDetailResponseAllOfResult>"
+  FormDetailResponse:
+    type: "object"
+    properties:
+      belongTo:
+        type: "integer"
+        format: "int32"
+      formName:
+        type: "string"
+      logoUrl:
+        type: "string"
+      remark:
+        type: "string"
+      instruction:
+        type: "string"
+      screenshotList:
+        type: "array"
+        items:
+          type: "string"
+      content:
+        type: "string"
+      analysisKeyInfo:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormVoAnalysisKeyInfo"
+      mappedInfo:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormVoMappedInfo"
+      formType:
+        type: "string"
+      isEdit:
+        type: "integer"
+        format: "int32"
+      formId:
+        type: "string"
+      appUaIds:
+        type: "array"
+        items:
+          type: "string"
+      visible:
+        type: "integer"
+        format: "int32"
+      userId:
+        type: "string"
+      companyId:
+        type: "string"
+      channelId:
+        type: "string"
+      openStatus:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FormDetailResponse"
+  ListFormDetailResponseAllOfResult:
+    type: "object"
+    properties:
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormDetailResponse"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListFormDetailResponseAllOfResult"
+  ListFormRequest:
+    type: "object"
+    required:
+    - "pageNum"
+    - "pageSize"
+    properties:
+      formName:
+        type: "string"
+      companyId:
+        type: "string"
+      openStatus:
+        type: "integer"
+        format: "int32"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+      pageSize:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListFormRequest"
+  ApiResponseListFormResponse:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/ListFormResponse"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.form.ListFormResponse>"
+  FormVoList:
+    type: "object"
+    properties:
+      formName:
+        type: "string"
+      channelId:
+        type: "string"
+      formId:
+        type: "string"
+      userId:
+        type: "string"
+      companyId:
+        type: "string"
+      openStatus:
+        type: "integer"
+        format: "int32"
+      logoUrl:
+        type: "string"
+      visible:
+        type: "integer"
+        format: "int32"
+      formType:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FormVoList"
+  ListFormResponse:
+    type: "object"
+    properties:
+      pageNum:
+        type: "integer"
+        format: "int32"
+      pages:
+        type: "integer"
+        format: "int32"
+      total:
+        type: "integer"
+        format: "int64"
+      pageSize:
+        type: "integer"
+        format: "int32"
+      formVoList:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormVoList"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListFormResponse"
+  CompanyIdRequest:
+    type: "object"
+    required:
+    - "companyId"
+    properties:
+      companyId:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.CompanyIdRequest"
+  ApiResponseListFormFlowMgmtResponse:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/ListFormFlowMgmtResponse"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.form.ListFormFlowMgmtResponse>"
+  FormFlowMgmtResponse:
+    type: "object"
+    properties:
+      resourceId:
+        type: "string"
+      formName:
+        type: "string"
+      content:
+        type: "string"
+      formType:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FormFlowMgmtResponse"
+  ListFormFlowMgmtResponse:
+    type: "object"
+    properties:
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/FormFlowMgmtResponse"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListFormFlowMgmtResponse"
+  ApiResponseListGroupTableResponseResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/ListGroupTableResponseResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.form.ListGroupTableResponseResult>"
+  GroupInfo:
+    type: "object"
+    properties:
+      groupId:
+        type: "string"
+      groupName:
+        type: "string"
+      orderNumber:
+        type: "integer"
+        format: "int64"
+      remark:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.GroupInfo"
+  ListGroupTableResponseResult:
+    type: "object"
+    properties:
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/GroupInfo"
+      paging:
+        $ref: "#/definitions/Paging"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListGroupTableResponseResult"
+  Paging:
+    type: "object"
+    properties:
+      pageNum:
+        type: "integer"
+        format: "int32"
+      pages:
+        type: "integer"
+        format: "int32"
+      total:
+        type: "integer"
+        format: "int32"
+      pageSize:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.Paging"
+  ApiResponseListLocationTableResponseResult:
+    type: "object"
+    properties:
+      result:
+        $ref: "#/definitions/ListLocationTableResponseResult"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<com.sinosun.ebank.backend.approval.model.form.ListLocationTableResponseResult>"
+  ListLocationTableResponseResult:
+    type: "object"
+    properties:
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/LocationInfo"
+      paging:
+        $ref: "#/definitions/Paging"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.ListLocationTableResponseResult"
+  LocationInfo:
+    type: "object"
+    required:
+    - "locationId"
+    - "locationName"
+    - "locationType"
+    - "orderNumber"
+    properties:
+      locationId:
+        type: "string"
+      parentId:
+        type: "string"
+      locationName:
+        type: "string"
+      locationType:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+        maximum: 3
+      orderNumber:
+        type: "integer"
+        format: "int32"
+      remark:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.LocationInfo"
+  SaveLocationRequest:
+    type: "object"
+    required:
+    - "locationName"
+    - "locationType"
+    - "orderNumber"
+    properties:
+      parentId:
+        type: "string"
+      locationName:
+        type: "string"
+      remark:
+        type: "string"
+      locationType:
+        type: "integer"
+        format: "int32"
+        minimum: 1
+        maximum: 3
+      orderNumber:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.SaveLocationRequest"
+  SetAppLocationInfoRequest:
+    type: "object"
+    required:
+    - "formIdList"
+    properties:
+      locationId:
+        type: "string"
+      formIdList:
+        type: "array"
+        items:
+          type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.SetAppLocationInfoRequest"
+  SetAppLocationRequest:
+    type: "object"
+    properties:
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/SetAppLocationInfoRequest"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.SetAppLocationRequest"
+  AssociationRequest:
+    type: "object"
+    required:
+    - "appUaIds"
+    - "formId"
+    properties:
+      appUaIds:
+        type: "array"
+        items:
+          type: "string"
+      formId:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.AssociationRequest"
+  SetVisibleRequest:
+    type: "object"
+    required:
+    - "formId"
+    - "visible"
+    properties:
+      visible:
+        type: "integer"
+        format: "int32"
+        minimum: 0
+        maximum: 1
+      formId:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.SetVisibleRequest"
+  UpdateFormStatusRequest:
+    type: "object"
+    required:
+    - "formId"
+    - "status"
+    properties:
+      formId:
+        type: "string"
+        description: "模板Id"
+      status:
+        type: "integer"
+        format: "int32"
+        description: "模板状态(1:开通，0：停用)"
+        minimum: 0
+        maximum: 1
+    description: "更新模板状态请求参数"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.UpdateFormStatusRequest"
+  ApiResponseObject:
+    type: "object"
+    properties:
+      result:
+        type: "object"
+      resultMessage:
+        type: "string"
+      resultCode:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.ApiResponse<java.lang.Object>"
+  FormUpdateLocationRequest:
+    type: "object"
+    required:
+    - "locationId"
+    - "locationName"
+    - "orderNumber"
+    properties:
+      locationId:
+        type: "string"
+      locationName:
+        type: "string"
+      orderNumber:
+        type: "integer"
+        format: "int32"
+      remark:
+        type: "string"
+    x-java-class: "com.sinosun.ebank.backend.approval.model.form.FormUpdateLocationRequest"

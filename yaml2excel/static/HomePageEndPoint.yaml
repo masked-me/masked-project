@@ -1,0 +1,1197 @@
+swagger: "2.0"
+info:
+  description: "首页管理接口说明"
+  version: "1.0.0"
+  title: "homepage API"
+  x-java-interface: "cse.gen.ebankdev.homepage.HomePageEndPoint.HomepageEndPointIntf"
+basePath: "/"
+tags:
+- name: "tcmhomePage"
+  description: "TCM首页管理相关API"
+- name: "apphomePage"
+  description: "APP首页管理相关API"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /listAnnInfos:
+    post:
+      tags:
+      - "tcmhomePage"
+      summary: "查询公告/广告列表"
+      operationId: "listAnnInfos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "查询公告/广告列表"
+        required: true
+        schema:
+          $ref: "#/definitions/ListHomepageAnnInfosRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListHomepageAnnInfosResponseResult"
+  /listAppDetailByLocation:
+    post:
+      tags:
+      - "apphomePage"
+      summary: "根据展示位置查询APP列表"
+      operationId: "listAppDetailByLocation"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "根据展示位置查询APP列表"
+        required: true
+        schema:
+          $ref: "#/definitions/ListAppDetailByLocationRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseGetAppDetailResponseResult"
+  /listAppInfos:
+    post:
+      tags:
+      - "tcmhomePage"
+      summary: "查询应用列表"
+      operationId: "listAppInfos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "查询应用列表"
+        required: true
+        schema:
+          $ref: "#/definitions/ListRecommendInfosRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListHomepageAppInfosReponseResult"
+  /listRecommendAnnInfos:
+    post:
+      tags:
+      - "tcmhomePage"
+      summary: "查询推荐的公告/广告列表"
+      operationId: "listRecommendAnnInfos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "查询推荐的公告/广告列表"
+        required: true
+        schema:
+          $ref: "#/definitions/ListRecommendInfosRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListAnnPubDetailResponseResult"
+  /listRecommendAppInfos:
+    post:
+      tags:
+      - "tcmhomePage"
+      summary: "查询推荐的应用列表"
+      operationId: "listRecommendAppInfos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "查询推荐的应用列表"
+        required: true
+        schema:
+          $ref: "#/definitions/ListRecommendInfosRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseGetAppDetailResponseResult"
+  /listRecommendWealthInfos:
+    post:
+      tags:
+      - "tcmhomePage"
+      summary: "查询推荐的理财列表"
+      operationId: "listRecommendWealthInfos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "查询推荐的理财列表"
+        required: true
+        schema:
+          $ref: "#/definitions/ListRecommendInfosRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListHomepageWealthInfosReponse"
+  /listWealthInfos:
+    post:
+      tags:
+      - "tcmhomePage"
+      summary: "查询理财列表"
+      operationId: "listWealthInfos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "查询理财列表"
+        required: true
+        schema:
+          $ref: "#/definitions/ListRecommendInfosRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseListHomepageWealthInfosReponse"
+  /loginShow:
+    post:
+      tags:
+      - "apphomePage"
+      summary: "查询首页展示"
+      operationId: "loginShow"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseLoginShowResponse"
+  /setRecommend:
+    post:
+      tags:
+      - "tcmhomePage"
+      summary: "设置/取消推荐"
+      operationId: "setRecommend"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "设置/取消推荐"
+        required: true
+        schema:
+          $ref: "#/definitions/SetRecommendRequest"
+      responses:
+        "200":
+          description: "response of 200"
+          schema:
+            $ref: "#/definitions/ApiResponseObject"
+definitions:
+  ListHomepageAnnInfosRequest:
+    type: "object"
+    required:
+    - "productType"
+    properties:
+      productType:
+        type: "integer"
+        format: "int32"
+        description: "产品类型（2：广告，3：公告）"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "当前页数，默认第一页"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "每页条数，默认10条"
+    description: "查询公告/广告请求参数"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.ListHomepageAnnInfosRequest"
+  ApiResponse:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        type: "object"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse"
+  ApiResponseListHomepageAnnInfosResponseResult:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        $ref: "#/definitions/ListHomepageAnnInfosResponseResult"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse<com.sinosun.ebank.backend.homepage.model.homepage.ListHomepageAnnInfosResponseResult>"
+  HomepageAnnInfoVo:
+    type: "object"
+    properties:
+      annId:
+        type: "string"
+        description: "公告Id"
+      annType:
+        type: "integer"
+        format: "int32"
+        description: "公告类型，21:金融首页广告，22：金融系统公告"
+      title:
+        type: "string"
+        description: "标题"
+      publishId:
+        type: "string"
+        description: "发布Id"
+      publishTime:
+        type: "integer"
+        format: "int64"
+        description: "发布时间"
+      publishStatus:
+        type: "integer"
+        format: "int32"
+        description: "发布状态"
+      expireStatus:
+        type: "integer"
+        format: "int32"
+        description: "过期状态"
+      beginTime:
+        type: "integer"
+        format: "int64"
+        description: "开始时间"
+      endTime:
+        type: "integer"
+        format: "int64"
+        description: "结束时间"
+      channelId:
+        type: "string"
+        description: "渠道Id"
+      rangeList:
+        type: "array"
+        items:
+          $ref: "#/definitions/NoticeRangeItem"
+      isRec:
+        type: "integer"
+        format: "int32"
+        description: "是否推荐(1:设置推荐，2：取消推荐)"
+    description: "首页公告信息映射"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.HomepageAnnInfoVo"
+  ListHomepageAnnInfosResponseResult:
+    type: "object"
+    properties:
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "当前页"
+      pages:
+        type: "integer"
+        format: "int32"
+        description: "总页数"
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总条数"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "每页条数"
+      annList:
+        type: "array"
+        description: "公告列表"
+        items:
+          $ref: "#/definitions/HomepageAnnInfoVo"
+    description: "查询公告类型返回参数"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.ListHomepageAnnInfosResponseResult"
+  NoticeRangeItem:
+    type: "object"
+    required:
+    - "rangeId"
+    - "rangeType"
+    properties:
+      rangeType:
+        type: "integer"
+        format: "int32"
+        description: "范围类型，1：自定义范围；2：部门；3：讨论组；4：大数据分群"
+      rangeId:
+        type: "string"
+        description: "范围id"
+    description: "公告范围列表"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.notice.NoticeRangeItem"
+  ListAppDetailByLocationRequest:
+    type: "object"
+    properties:
+      locationId:
+        type: "string"
+        description: "位置Id,不携带默认查询金融工作台数据"
+    description: "根据位置查询应用列表请求参数"
+    x-java-class: "com.sinosun.ebank.backend.homepage.entity.homepage.ListAppDetailByLocationRequest"
+  ApiResponseGetAppDetailResponseResult:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        $ref: "#/definitions/GetAppDetailResponseResult"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse<com.sinosun.ebank.backend.homepage.model.appstore.GetAppDetailResponseResult>"
+  ApkInfo:
+    type: "object"
+    properties:
+      md5:
+        type: "string"
+        description: "MD5"
+      urlAuth:
+        type: "string"
+        description: "授权验证信息url"
+      signature:
+        type: "string"
+        description: "签名"
+      compatibleVersion:
+        type: "string"
+        description: "最低兼容版本号"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.appstore.ApkInfo"
+  AppInfoVo:
+    type: "object"
+    properties:
+      appId:
+        type: "string"
+        description: "应用id"
+      category:
+        type: "integer"
+        format: "int32"
+        description: "类型：1-安装包 2-小应用 3-资源包"
+      status:
+        type: "integer"
+        format: "int32"
+        description: "发布状态，1:待发布；2：发布；3：待撤销；4：撤销，默认全部"
+      appName:
+        type: "string"
+        description: "应用名称"
+      logoUrl:
+        type: "string"
+        description: "logourl"
+      platformIdList:
+        type: "array"
+        description: "平台id列表，枚举值由前端维护"
+        items:
+          type: "string"
+      screenshotList:
+        type: "array"
+        description: "截图"
+        items:
+          type: "string"
+      remark:
+        type: "string"
+        description: "描述"
+      operOrgId:
+        type: "string"
+        description: "操作人企业id"
+      labelList:
+        type: "array"
+        description: "标签"
+        items:
+          type: "string"
+      classId:
+        type: "string"
+        description: "分类id"
+      version:
+        type: "string"
+        description: "版本号"
+      backAddr:
+        type: "string"
+        description: "后台地址"
+      homeAddr:
+        type: "string"
+        description: "首页地址"
+      instruction:
+        type: "string"
+        description: "详细描述"
+      parentAppId:
+        type: "string"
+        description: "父级应用id"
+      appletInfo:
+        $ref: "#/definitions/AppletInfo"
+      apkInfo:
+        $ref: "#/definitions/ApkInfo"
+      creator:
+        type: "string"
+        description: "创建者"
+      locationInfos:
+        type: "array"
+        items:
+          $ref: "#/definitions/LocationBasicInfo"
+    description: "应用信息"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.appstore.AppInfoVo"
+  AppletInfo:
+    type: "object"
+    properties:
+      disclaimer:
+        type: "string"
+        description: "免责声明"
+      isNeedVerify:
+        type: "integer"
+        format: "int32"
+        description: "是否需要身份验证，1：不需要；2：需要"
+      isVisible:
+        type: "integer"
+        format: "int32"
+        description: "1-可见 2-不可见"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.appstore.AppletInfo"
+  GetAppDetailResponseResult:
+    type: "object"
+    properties:
+      list:
+        type: "array"
+        description: "应用列表"
+        items:
+          $ref: "#/definitions/AppInfoVo"
+    description: "获取应用详情返回参数"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.appstore.GetAppDetailResponseResult"
+  LocationBasicInfo:
+    type: "object"
+    properties:
+      locationName:
+        type: "string"
+      locationId:
+        type: "string"
+      locationType:
+        type: "integer"
+        format: "int32"
+      orderNumber:
+        type: "integer"
+        format: "int32"
+      appOrderNumber:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.homepage.entity.homepage.LocationBasicInfo"
+  ListRecommendInfosRequest:
+    type: "object"
+    required:
+    - "pageNum"
+    - "pageSize"
+    - "productType"
+    properties:
+      productType:
+        type: "integer"
+        format: "int32"
+        description: "产品类型（1：小应用，2：广告，3：公告,4：理财）"
+      productName:
+        type: "string"
+        description: "查询字段"
+      position:
+        type: "integer"
+        format: "int32"
+        description: "推荐展示的位置（1：tcm，2：app）"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "当前页数"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "每页记录数"
+    description: "查询推荐信息请求参数"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.ListRecommendInfosRequest"
+  ApiResponseListHomepageAppInfosReponseResult:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        $ref: "#/definitions/ListHomepageAppInfosReponseResult"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse<com.sinosun.ebank.backend.homepage.model.homepage.ListHomepageAppInfosReponseResult>"
+  HomepageAppBasicInfo:
+    type: "object"
+    properties:
+      appId:
+        type: "string"
+        description: "应用id"
+      category:
+        type: "integer"
+        format: "int32"
+        description: "应用类型 2-小应用 3-资源包"
+      appName:
+        type: "string"
+        description: "应用名称"
+      logoUrl:
+        type: "string"
+        description: "应用logo"
+      isRec:
+        type: "integer"
+        format: "int32"
+        description: "是否推荐(1:设置推荐，2：取消推荐)"
+    description: "首页应用基础信息"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.HomepageAppBasicInfo"
+  ListHomepageAppInfosReponseResult:
+    type: "object"
+    properties:
+      appList:
+        type: "array"
+        description: "应用列表"
+        items:
+          $ref: "#/definitions/HomepageAppBasicInfo"
+    description: " 查询应用列表响应参数"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.ListHomepageAppInfosReponseResult"
+  AnnPubDetailVo:
+    type: "object"
+    properties:
+      annId:
+        type: "string"
+        description: "公告Id"
+      annType:
+        type: "integer"
+        format: "int32"
+        description: "公告类型，目前有1：部门公告，2：群组公告，3：工作台广告，4：启动页广告，5：系统公告，7：弹出广告，8：首页广告，\
+          9：新闻资讯，10：财务广告"
+      title:
+        type: "string"
+        description: "标题"
+      author:
+        type: "string"
+        description: "作者"
+      isVisible:
+        type: "integer"
+        format: "int32"
+        description: "是否显示公告：1：显示 2：隐藏"
+      backPicture:
+        type: "string"
+        description: "公告背景图片地址"
+      summary:
+        type: "string"
+        description: "公告摘要"
+      content:
+        type: "string"
+        description: "公告内容"
+      publishId:
+        type: "string"
+        description: "发布Id"
+      userId:
+        type: "string"
+        description: "发布人Id"
+      companyId:
+        type: "string"
+        description: "发布人所在企业Id"
+      publishTime:
+        type: "integer"
+        format: "int64"
+        description: "发布时间，10位时间戳"
+      publishStatus:
+        type: "integer"
+        format: "int32"
+        description: "发布状态，1:待发布；2：发布；3：待撤销；4：撤销，默认全部"
+      expireStatus:
+        type: "integer"
+        format: "int32"
+        description: "过期状态，1：有效,；2：未生效，3：已失效；不传入返回全部，当前时间在开始时间和结束时间之内都算有效"
+      publishType:
+        type: "integer"
+        format: "int32"
+        description: "发布类型，1：立即；2：定时，默认为1"
+      beginTime:
+        type: "integer"
+        format: "int64"
+        description: "有效开始时间戳，默认为2000年1月1日"
+      endTime:
+        type: "integer"
+        format: "int64"
+        description: "有效结束时间戳，默认为2100年1月1日"
+      operSource:
+        type: "integer"
+        format: "int32"
+        description: "操作来源，1：运营；2：企业，默认为1"
+      channelId:
+        type: "string"
+        description: "发布渠道"
+      rangeList:
+        type: "array"
+        description: "范围id列表"
+        items:
+          $ref: "#/definitions/NoticeRangeItem"
+    description: "公告发布详情"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.notice.AnnPubDetailVo"
+  ApiResponseListAnnPubDetailResponseResult:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        $ref: "#/definitions/ListAnnPubDetailResponseResult"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse<com.sinosun.ebank.backend.homepage.model.notice.ListAnnPubDetailResponseResult>"
+  ListAnnPubDetailResponseResult:
+    type: "object"
+    required:
+    - "annPubDetailList"
+    properties:
+      annPubDetailList:
+        type: "array"
+        description: "发布Id"
+        items:
+          $ref: "#/definitions/AnnPubDetailVo"
+    description: "查询公告详情返回"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.notice.ListAnnPubDetailResponseResult"
+  ApiResponseListHomepageWealthInfosReponse:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        $ref: "#/definitions/ListHomepageWealthInfosReponse"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse<com.sinosun.ebank.backend.homepage.model.homepage.ListHomepageWealthInfosReponse>"
+  FundProduct:
+    type: "object"
+    properties:
+      productCode:
+        type: "string"
+        description: "产品代码 "
+      productName:
+        type: "string"
+        description: "产品名称 "
+      productDetail:
+        description: "产品详情明细 "
+        $ref: "#/definitions/QueryProductDetailResponse"
+      productWorth:
+        type: "string"
+        description: "产品净值 产品最新净值，净值型产品有效"
+      breakEvenType:
+        type: "string"
+        description: "保本类型 0-保证收益型\n1-保本浮动收益型\n2-非保本浮动收益型"
+      pdScl:
+        type: "string"
+        description: "产品规模 "
+      availableVol:
+        type: "string"
+        description: "可用份额 产品剩余可购买份额 单位 万份"
+      ipoStrtDt:
+        type: "string"
+        description: "募集开始日期 "
+      ipoEndDt:
+        type: "string"
+        description: "募集结束日期 "
+      productCreateDate:
+        type: "string"
+        description: "产品成立日期 封闭式产品成立日为产品起息日"
+      productEndDate:
+        type: "string"
+        description: "产品终止日期 无期限产品终止日期无效"
+      investTerm:
+        type: "string"
+        description: "产品期限 产品期限为产品到期日减去产品成立日 单位 天；无期限产品无效"
+      unlimitedFlag:
+        type: "string"
+        description: "是否无期限产品 0-否（产品有期限）\n1-是（产品无期限）"
+      productType:
+        type: "string"
+        description: "产品类型 1-净值开放型（开放式）                                          \
+          \                                                                      \
+          \                                                                      \
+          \                                                                 3-收益开放\
+          型（开放式）      \n5-收益封闭型（封闭式）      \n7-收益货币型（开放式）\n8-收益滚存型（封闭式）\n9-收益周期型（开放\
+          式）\na-N天持有型（开放式）\nb-现金管理类产品(开放式)\n2-净值封闭型(封闭式)\nc-净值定开型(开放式)"
+      productStatus:
+        type: "string"
+        description: "产品状态 产品状态：空(空字符即可) 1，预约认购期；2，认购期；3，封闭期；4，发行失败；5，开放期；6，产品终止（清\
+          盘）7,现金管理类产品封闭期"
+      planIncome:
+        type: "string"
+        description: "预期收益率 0-无收益率产品，其它-产品预期收益率或预期收益率区间(带%，区间以‘-’连接)，净值型产品为业绩比较基准"
+      pdHotFlg:
+        type: "string"
+        description: "产品热销标志 0-非热销\n1-热销"
+      pdRecomFlg:
+        type: "string"
+        description: "产品推荐标志 0-非推荐\n1-推荐"
+      buyFlg:
+        type: "string"
+        description: "购买标志 0-不可购买\n1-可购买"
+      holdDays:
+        type: "string"
+        description: "持有天数 产品类型为N天持有产品时使用，最短持有天数"
+      annualYield:
+        type: "string"
+        description: "七日年��收益率 产品类型为现金管理类产品时使用,七日年化收益率"
+      thsandsIncome:
+        type: "string"
+        description: "万份收益 产品类型为现金管理类产品时使用, 万份收益"
+      opnStrtDt:
+        type: "string"
+        description: "开放起始日期 净值定开型产品必输\n本周期开放起始日"
+      opnEndDt:
+        type: "string"
+        description: "开放结束日期 净值定开型产品必输\n本周期开放结束日"
+      opnCfrmDt:
+        type: "string"
+        description: "开放确认日期 净值定开型产品必输\n本周期开放确认日"
+      opnStrtDt1:
+        type: "string"
+        description: "开放起始日期1 净值定开型产品必输\n下一周期开放起始日"
+      opnEndDt1:
+        type: "string"
+        description: "开放结束日期1 净值定开型产品必输\n下一周期开放结束日"
+      opnCfrmDt1:
+        type: "string"
+        description: "开放确认日期1 净值定开型产品必输\n下一周期开放确认日"
+      prchsDdcDays:
+        type: "string"
+        description: "申购扣款间隔天数 "
+      prchsDays:
+        type: "string"
+        description: "申购确认间隔天数 "
+      redeemDays:
+        type: "string"
+        description: "赎回确认间隔天数 "
+      redeemDdcDays:
+        type: "string"
+        description: "赎回还款间隔天数 "
+      perFstMinbuyamt:
+        type: "string"
+        description: "个人首次最低投资金额 "
+      perSigMinbuyamt:
+        type: "string"
+        description: "个人追加最低投资金额 "
+      insFstMinbuyamt:
+        type: "string"
+        description: "机构首次最低投资金额 "
+      insSigMinbuyamt:
+        type: "string"
+        description: "机构追加最低投资金额 "
+      financialStyle:
+        type: "integer"
+        format: "int32"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.wealth.FundProduct"
+  HomepageWealthBasicInfo:
+    type: "object"
+    properties:
+      productId:
+        type: "string"
+        description: "理财产品id"
+      productName:
+        type: "string"
+        description: "理财产品名称"
+      wealthProductType:
+        type: "string"
+        description: "理财产品类型"
+      rate:
+        type: "string"
+        description: "产品利率"
+      productCreateDate:
+        type: "string"
+        description: "产品发布时间"
+      isRec:
+        type: "integer"
+        format: "int32"
+        description: "是否推荐(1:设置推荐，2：取消推荐)"
+      position:
+        type: "integer"
+        format: "int32"
+        description: "推荐展示的位置（1：app，2：tcm,.....预留字段）"
+      startTime:
+        type: "integer"
+        format: "int64"
+        description: "有效时间"
+      endTime:
+        type: "integer"
+        format: "int64"
+        description: "有效时间"
+      deadline:
+        type: "string"
+        description: "产品期限"
+      merit:
+        type: "array"
+        description: "产品标签"
+        items:
+          type: "string"
+      insSigMinbuyamt:
+        type: "string"
+        description: "机构追加最低投资金额 "
+      financialStyle:
+        type: "string"
+      planIncome:
+        type: "string"
+        description: "预期收益率 0-无收益率产品，其它-产品预期收益率或预期收益率区间(带%，区间以‘-’连接)，净值型产品为业绩比较基准"
+      productDetail:
+        $ref: "#/definitions/FundProduct"
+    description: "首页应用基础信息"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.HomepageWealthBasicInfo"
+  ListHomepageWealthInfosReponse:
+    type: "object"
+    required:
+    - "pageNum"
+    - "pageSize"
+    - "pages"
+    - "total"
+    properties:
+      productList:
+        type: "array"
+        description: "应用列表"
+        items:
+          $ref: "#/definitions/HomepageWealthBasicInfo"
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总记录数"
+      pages:
+        type: "integer"
+        format: "int32"
+        description: "总页数"
+      pageSize:
+        type: "integer"
+        format: "int32"
+        description: "每页记录数"
+      pageNum:
+        type: "integer"
+        format: "int32"
+        description: "当前页数"
+    description: " 查询应用列表响应参数"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.ListHomepageWealthInfosReponse"
+  QueryProductDetailResponse:
+    type: "object"
+    properties:
+      productCode:
+        type: "string"
+        description: "产品代码 "
+      productName:
+        type: "string"
+        description: "产品名称 "
+      productWorth:
+        type: "string"
+        description: "产品净值 产品最新净值，净值型产品有效"
+      worthDate:
+        type: "string"
+        description: "净值日期 最新净值日期，净值型产品有效，格式:YYYYMMDD"
+      pdFaceVal:
+        type: "string"
+        description: "产品面值 "
+      issuVal:
+        type: "string"
+        description: "发行面值 "
+      breakEvenType:
+        type: "string"
+        description: "保本类型 0-保证收益型 1-保本浮动收益型 2-非保本浮动收益型\n可以多选，以逗号进行分隔\n不输时为全部"
+      ipoStrtDt:
+        type: "string"
+        description: "募集开始日期 "
+      ipoEndDt:
+        type: "string"
+        description: "募集结束日期 "
+      productCreateDate:
+        type: "string"
+        description: "产品成立日期 "
+      productEndDate:
+        type: "string"
+        description: "产品终止日期 无期限产品终止日期无效"
+      pdScl:
+        type: "string"
+        description: "产品规模 "
+      fundedDays:
+        type: "string"
+        description: "资金到账天数 "
+      bnsTp:
+        type: "string"
+        description: "分红方式 0-红利再投          1-现金分红                          "
+      prchsDdcDays:
+        type: "string"
+        description: "申购扣款间隔天数 "
+      prchsDays:
+        type: "string"
+        description: "申购确认间隔天数 "
+      redeemDays:
+        type: "string"
+        description: "赎回确认间隔天数 "
+      redeemDdcDays:
+        type: "string"
+        description: "赎回还款间隔天数 "
+      bigRedeemRate:
+        type: "string"
+        description: "巨额赎回比例 "
+      perMinRedeemvol:
+        type: "string"
+        description: "个人单笔最小赎回份额 "
+      perMaxRedeemvol:
+        type: "string"
+        description: "个人单笔最大赎回份额 "
+      perFstMinbuyamt:
+        type: "string"
+        description: "个人首次最低投资金额 "
+      perSigMinbuyamt:
+        type: "string"
+        description: "个人追加最低投资金额 "
+      perMinHoldvol:
+        type: "string"
+        description: "个人最低持有份额 "
+      insMinRedeemvol:
+        type: "string"
+        description: "机构单笔最小赎回份额 "
+      insMaxRedeemvol:
+        type: "string"
+        description: "机构单笔最大赎回份额 "
+      insFstMinbuyamt:
+        type: "string"
+        description: "机构首次最低投资金额 "
+      insSigMinbuyamt:
+        type: "string"
+        description: "机构追加最低投资金额 "
+      orgMinLot:
+        type: "string"
+        description: "机构最低持有份额 "
+      ccy:
+        type: "string"
+        description: "货币符 产品的发行币种"
+      opnMktTm:
+        type: "string"
+        description: "开市时间 产品开市时间：HHMMSS"
+      closeMktTm:
+        type: "string"
+        description: "闭市时间 产品闭市时间：HHMMSS"
+      permCnlGrp:
+        type: "string"
+        description: "允许渠道组 允许的渠道标识字符串,各渠道标识为 0-直销 1-银行柜台 2-网银 3-自助终端 4-电话银行 5-手机银\
+          行 C-微信银行"
+      clientGrade:
+        type: "string"
+        description: "客户等级 允许的客户等级标识字符串,各客户等级标识为 \n个人：\n1：钻石客户\n2：黄金客户\n3：白银客户\n4：\
+          问题客户\n5：普通客户\n6：潜力客户\n对公：\n7：VIP\n8：核心客户\n9：潜力客户\n10：低价值客户\n逗号分隔"
+      custGroup:
+        type: "string"
+        description: "客户群体 允许的客户等级标识字符串，多个标签时，用逗号分隔\nCCD01  正常代发\nCCD02  取消代发\nCCD03\
+          \  非代发客户\nCCD00  不详\n0      其他"
+      brndCode:
+        type: "string"
+        description: "品牌代码 品牌代码"
+      manageMoneyRate:
+        type: "string"
+        description: "理财产品风险等级 R1-保守型\nR2-收益型\nR3-稳健型\nR4-进取型\nR5-积极进取型"
+      productStatus:
+        type: "string"
+        description: "产品状态 产品状态：空(空字符即可) 1，预约认购期；2，认购期；3，封闭期；4，发行失败；5，开放期；6，产品终止（清\
+          盘）7,现金管理类产品封闭期"
+      planIncome:
+        type: "string"
+        description: "预期收益率 产品预期收益率/业绩比较基准或预期收益率区间(带%，区间以‘-’连接)"
+      prodHotFlag:
+        type: "string"
+        description: "产品热销标志 0-非热销\n1-热销"
+      buyFlag:
+        type: "string"
+        description: "购买标志 0-不可购买\n1-可购买"
+      investTerm:
+        type: "string"
+        description: "产品期限 产品期限为产品到期日减去产品成立日 单位 天；无期限产品无效"
+      availableVol:
+        type: "string"
+        description: "可用份额 产品剩余可购买份额 单位 万份"
+      unlimitedFlag:
+        type: "string"
+        description: "是否无期限产品 0-否（产品有期限）\n1-是（产品无期限）"
+      productType:
+        type: "string"
+        description: "产品类型 1-净值开放型（开放式）                                          \
+          \                                                                      \
+          \                                                                      \
+          \                                                                 3-收益开放\
+          型（开放式）      \n5-收益封闭型（封闭式）      \n7-收益货币型（开放式）\n8-收益滚存型（封闭式）\n9-收益周期型（开放\
+          式）\na-N天持有型（开放式）\nb-现金管理类产品(开放式)\n2-净值封闭型(封闭式)\nc-净值定开型(开放式)"
+      holdDays:
+        type: "string"
+        description: "持有天数 N天持有产品最短持有天数，产品类型为N天持有型产品有效"
+      remark:
+        type: "string"
+        description: "备注 理财产品备注信息（用于渠道展示的产品提示信息）"
+      annualYield:
+        type: "string"
+        description: "七日年化收益率 产品类型为现金管理类产品时使用,七日年化收益率"
+      thsandsIncome:
+        type: "string"
+        description: "万份收益 产品类型为现金管理类产品时使用, 万份收益"
+      opnDt:
+        type: "string"
+        description: "开放日期 产品为现金管理类时，使用开放日期"
+      rsgMd:
+        type: "string"
+        description: "募集方式 募集方式0-私募 1-公募"
+      exsYldDvdnRto:
+        type: "string"
+        description: "超额收益分成比例 净值封闭性，净值定开型产品必输，展示使用"
+      opnStrtDt:
+        type: "string"
+        description: "开放起始日期 净值定开型产品必输，本周期开放起始日"
+      opnEndDt:
+        type: "string"
+        description: "开放结束日期 净值定开型产品必输，本周期开放结束日"
+      opnCfrmDt:
+        type: "string"
+        description: "开放确认日期 净值定开型产品必输，本周期开放确认日"
+      opnStrtDt1:
+        type: "string"
+        description: "开放起始日期1 净值定开型产品必输，下一周期开放起始日"
+      opnEndDt1:
+        type: "string"
+        description: "开放结束日期1 净值定开型产品必输，下一周期开放结束日"
+      opnCfrmDt1:
+        type: "string"
+        description: "开放确认日期1 净值定开型产品必输，下一周期开放确认日"
+      pdRgstId:
+        type: "string"
+        description: "产品登记编码 全国银行业理财信息登记系统赋予银行理财产品的具有唯一性的编码"
+      availableBal:
+        type: "number"
+        description: "可用余额 "
+      accountName:
+        type: "string"
+        description: "存款户名 "
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.wealth.QueryProductDetailResponse"
+  ApiResponseLoginShowResponse:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        $ref: "#/definitions/LoginShowResponse"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse<com.sinosun.ebank.backend.homepage.model.homepage.LoginShowResponse>"
+  LoginShowResponse:
+    type: "object"
+    properties:
+      advertisements:
+        description: "广告列表"
+        $ref: "#/definitions/ListAnnPubDetailResponseResult"
+      announcement:
+        description: "公告列表"
+        $ref: "#/definitions/ListAnnPubDetailResponseResult"
+      appDetails:
+        description: "应用列表"
+        $ref: "#/definitions/GetAppDetailResponseResult"
+    description: "APP查询首页基本信息返回"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.LoginShowResponse"
+  SetRecommendRequest:
+    type: "object"
+    required:
+    - "isRec"
+    - "productIds"
+    - "productType"
+    properties:
+      productIds:
+        type: "array"
+        description: "产品唯一标识-发布ID"
+        items:
+          type: "string"
+      productType:
+        type: "integer"
+        format: "int32"
+        description: "产品类型（1：小应用，2：广告，3：公告，4：理财）"
+        minimum: 1
+        maximum: 4
+      isRec:
+        type: "integer"
+        format: "int32"
+        description: "是否推荐(1:设置推荐，2：取消推荐)"
+        minimum: 1
+        maximum: 2
+      position:
+        type: "integer"
+        format: "int32"
+        description: "推荐展示的位置（1：tcm，2：app）"
+      startTime:
+        type: "integer"
+        format: "int64"
+        description: "有效时间"
+      endTime:
+        type: "integer"
+        format: "int64"
+        description: "有效时间"
+      merit:
+        type: "array"
+        description: "产品标签"
+        items:
+          type: "string"
+      financialStyle:
+        type: "string"
+    description: "设置/取消推荐"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.homepage.SetRecommendRequest"
+  ApiResponseObject:
+    type: "object"
+    required:
+    - "resultCode"
+    properties:
+      result:
+        type: "object"
+      resultMessage:
+        type: "string"
+        description: "错误描述"
+      resultCode:
+        type: "integer"
+        format: "int32"
+        description: "错误码, 0-成功"
+    description: "通用响应"
+    x-java-class: "com.sinosun.ebank.backend.homepage.model.ApiResponse<java.lang.Object>"

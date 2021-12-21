@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../static/js/js-yaml.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <input id="upload" type="file" />
+    <script>
+      const upload = document.querySelector("#upload");
+      let lastJson = {};
+      upload.onchange = (event) => {
+        //此处校验文件后缀
+        var file = event.target.files[0].name; // (利用console.log输出看file文件对象) properties/xml/json/conf/config/data/ini/txt/yaml/yml/cfg
+        var num = file.split(".");
+        var mun = num[num.length - 1];
+        console.log(mun);
+        if (
+          mun == "yaml"
+          //  || mun == "properties" ||
+          //   mun == "xml" ||
+          //   mun == "json" ||
+          //   mun == "conf" ||
+          //   mun == "config" ||
+          //   mun == "data" ||
+          //   mun == "txt" ||
+          //   mun == "config" ||
+          //   mun == "yaml" ||
+          //   mun == "cfg"
+        ) {
+          readFile();
+        } else {
+          alert("请重新点击选择文件传入符合标准的文件");
+        }
+      };
+      function readFile() {
+        let fileselect = upload.files[0]; //找到文件上传的元素
+        let reader = new FileReader();
+        // console.log(fileselect);
+        if (typeof FileReader === "undefined") {
+          alert("您的浏览器不支持FileReader接口");
+        }
+        reader.readAsText(fileselect, "utf-8"); //注意读取中文的是用这个编码，不是utf-8
+        reader.onload = function () {
+          console.log(reader.result); //文件内容
+          lastJson = yaml2json(reader.result);
+          console.log(lastJson);
+        };
+      }
+      // 获取yaml数据转json
+      function yaml2json(reader) {
+        let doc = jsyaml.load(reader);
+        return doc;
+      }
+    </script>
+  </body>
+</html>
