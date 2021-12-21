@@ -1,5 +1,5 @@
 /*!
- * ApiFaker is a simulator that help developers to improve efficiency in development,
+ * SCPMock is a simulator that help developers to improve efficiency in development,
  * especially for front-end engineers.
  * Lets define api and run it yourself.
  *

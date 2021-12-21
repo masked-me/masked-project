@@ -1,5 +1,5 @@
-# Api Faker
-这里可以查看示例：[http://demo.apifaker.com/~apifaker/](http://demo.apifaker.com/~apifaker/)
+# SCP Mock
+这里可以查看示例：[http://demo.SCP Mock.com/~SCP Mock/](http://demo.SCP Mock.com/~SCP Mock/)
 
 ### 简介
 
@@ -14,13 +14,13 @@ Api管理平台支持浏览器: Chrome, Firefox, Safari, Opera, Internet Explore
 Api Faker运行在Nodejs环境下，请确保系统中已经安装好Nodejs。
 
 从下面地址下载最新的文件
-[https://github.com/hylin/apifaker/archive/master.zip](https://github.com/hylin/apifaker/archive/master.zip)
+[https://github.com/hylin/SCP Mock/archive/master.zip](https://github.com/hylin/SCP Mock/archive/master.zip)
 解压到任意目录，命令行中cd到该解压目录，安装依赖组件，根据实际情况修改config.js配置，然后启动即可。
 
 ```
 npm install
 // modify the config file as yours
-node apifaker.js
+node SCP Mock.js
 ```
 
 
@@ -35,7 +35,7 @@ node apifaker.js
 ### 说明
 
 #### Api信息管理
-1.访问http://工具所在服务器地址/~apifaker/，即可开始管理Api
+1.访问http://工具所在服务器地址/~SCP Mock/，即可开始管理Api
 
 2.添加接口和添加模拟数据记录页各个字段都有详细的说明，请参考各个字段说明
 
@@ -43,7 +43,7 @@ node apifaker.js
 
 1.将你希望模拟的api的域名host到工具部署所在机器，到工具页面添加对应api信息，然后浏览器中访问api即可看到返回模拟的数据。
 
-例如，工具自带两个qq地图的webservice接口示例。你只需要在你本机做以下host（192.210.195.6是demo.apifaker.com的ip）
+例如，工具自带两个qq地图的webservice接口示例。你只需要在你本机做以下host（192.210.195.6是demo.SCP Mock.com的ip）
 ```
 192.210.195.6 apis.map.qq.com
 ```
@@ -62,11 +62,11 @@ node apifaker.js
 。
 这样在机器A上访问http://api.example.com/v1/get_user_info 时，如果没有匹配上设置的模拟数据条件，则该工具会自动从机器B发起一个相同的请求访问http://api.example.com/v1/get_user_info ，由于机器B上没有host，所以会去访问实际的api.example.com域名下的接口
 
-还是demo.apifaker.com上的示例，host不变，你访问 http://apis.map.qq.com/ws/geocoder/v1?location=39.984154,116.307490&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&callback=test ，虽然apis.map.qq.com被host到了192.210.195.6，但是还是返回了正确结果，因为该接口目前停止了模拟，并开启了代理模式。
+还是demo.SCP Mock.com上的示例，host不变，你访问 http://apis.map.qq.com/ws/geocoder/v1?location=39.984154,116.307490&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&callback=test ，虽然apis.map.qq.com被host到了192.210.195.6，但是还是返回了正确结果，因为该接口目前停止了模拟，并开启了代理模式。
 
 ### License
 
 Apache License 2.0
 
-&copy; 2014 http://www.apifaker.com/
+&copy; 2014 http://www.SCP Mock.com/
 

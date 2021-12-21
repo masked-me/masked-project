@@ -172,6 +172,37 @@
                 }
                 meddleArr.push(item)
             });
+            
+			// excel空数据删除
+            paramsArr.forEach((item,index)=>{
+                Object.keys(item).forEach(i=>{
+                    if(item[i] == '' && ( i =='A' || i =='B' || i =='C' ||i == 'D')){
+                        delete item[i]
+                    }
+                })
+            })
+
+            paramsArr.forEach((item,index)=>{
+                if(Object.keys(item).length === 0){
+                        paramsArr.splice(index,1)
+                    }
+            })
+			
+			// excel空数据删除
+            resultsArr.forEach((item,index)=>{
+                Object.keys(item).forEach(i=>{
+                    if(item[i] == '' && ( i =='A' || i =='B' || i =='C' ||i == 'D')){
+                        delete item[i]
+                    }
+                })
+            })
+
+            resultsArr.forEach((item,index)=>{
+                if(Object.keys(item).length === 0){
+                    resultsArr.splice(index,1)
+                    }
+            })
+
             apiHead = disposeApiHeadArr(apiHeadArr)
             apiHead.name = sheetName2path(sheetName)
             apiHead.path = '<%=config.managerPath%>'+sheetName2path(sheetName)
@@ -184,7 +215,7 @@
             return {sheetName,apiHead,params,results,demo,simulatorsArr}
         }
         function sheetName2path(name){
-            let arr = ['.', '_', '-', '~']
+            let arr = ['_', '-', '~']
             let x = arr.filter((item) => name.includes(item))
             let path = name.split(`${x[0]}`).reduce((cur, pre) => {
                 return `${cur}/${pre}`
@@ -196,10 +227,18 @@
             var objArr = []
             arr.forEach(item => {
                 if(item.hasOwnProperty(str)){
-                    objArr.push({name:item.A,value:item[str],desc:item.D,type:item.B})
+                    let itemA = item.A.replace(' ', '');
+                    objArr.push({name:itemA,value:item[str],desc:item.D,type:item.B})
                 }
             })
             return objArr
+        }
+
+        let menu = {
+            'object': 'jsonArray',
+            'number': 'int',
+            'string': 'string',
+            'boolean': 'boolean'
         }
 
         // 循环遍历对象中的数据
@@ -209,16 +248,21 @@
                     if (Object.prototype.toString.call(obj[prop]) == '[object Object]' || Object.prototype.toString.call(obj[prop]) === '[object Array]') {
                         EdiObjValue(obj[prop], data)
                     }
-                    if (prop == data.name || data.type.indexOf(prop) > -1) {
+                    if (prop == data.name && menu[typeof obj[prop]] == data.type || data.type.indexOf(prop) > -1) {
+                        if(data.setOver) return
                         if (data.type.indexOf("List") > -1 || data.type.indexOf("list") > -1 || data.type.indexOf("jsonArray") > -1) {
                             obj[prop].push(data.value)
+                            data.setOver = true
                         } else {
                             if (['string','STRING'].indexOf(data.type) > -1) {
                                 obj[prop] = data.value;
+                                data.setOver = true
                             } else if (['int','long','double','short','float'].indexOf(data.type) > -1) {
                                 obj[prop] = Number(data.value);
+                                data.setOver = true
                             } else if (['bool','boolean'].indexOf(data.type) > -1) {
                                 obj[prop] = !!data.value
+                                data.setOver = true
                             }
                         }
                     }
@@ -255,17 +299,18 @@
             var results = []
             var name = ''
             arr.forEach(item => {
-                if (myReg.test(item.A)) {
+                let itemA = item.A.replace(' ', '')
+                if (myReg.test(itemA)) {
                     if (!item.hasOwnProperty('B')) {
                         if (name == '') {
                             results = JSON.parse(JSON.stringify(b))
                         } else {
                             setObjFn(results, name, b)
                         }
-                        name = item.A
+                        name = itemA
                         b = []
                     } else {
-                        b.push({name:item.A,type:item.B,isMust:item.C == "必选" ? "1" : "0",desc:item.D})
+                        b.push({name:itemA,type:item.B,isMust:item.C == "必选" ? "1" : "0",desc:item.D})
                     }
                 }
             })
@@ -280,8 +325,10 @@
         // 设置obj
         function setObjFn(results, name, b){
                 results.forEach(item => {
-                    if (item.name == name) {
+                    // setOver 处理父子对象相同属性值的问题
+                    if (item.name == name && !item.setOver) {
                         item.obj = b
+                        item.setOver = true
                     } else if ((item.type.indexOf('List') > -1 || item.type.indexOf('list') > -1)&& item.type.indexOf(name) > -1) {
                         item.arr = b
                     } else if(!!item.obj){
@@ -296,18 +343,25 @@
             for (var prop in obj) {
                 if (obj.hasOwnProperty(prop)) {
                     if (Object.prototype.toString.call(obj[prop]) == '[object Object]'){
-                        arr.forEach(item => {
+                        let flag = true
+                        arr.forEach((item,index) => {
                             for (var itemProp in item) {
-                                if (itemProp == prop) {
+                                // 处理父子对象属性值相同问题
+                                if (itemProp == prop && flag) {
+                                    flag = false
+                                    arr.splice(index,1)
                                     EdiDemoValue(item[itemProp], arr)
                                     obj[prop] = item[itemProp]
                                 }
                             }
                         })
                     } else if (Object.prototype.toString.call(obj[prop]) === '[object Array]') {
-                        arr.forEach(item => {
+                        let flag = true
+                        arr.forEach((item,index) => {
                             for (var itemProp in item) {
-                                if (itemProp == prop) {
+                                if (itemProp == prop && flag) {
+                                    flag = false
+                                    arr.splice(index,1)
                                     EdiDemoValue(item[itemProp], arr)
                                     obj[prop].push(item[itemProp])
                                 }
@@ -331,7 +385,8 @@
             jsonarr = [];
             for (let i = 0;i < arr.length; i++) {
                 const item = arr[i];
-                if (myReg.test(item.A)) {
+                let itemA = item.A.replace(' ', '');
+                if (myReg.test(itemA)) {
                     if (!item.hasOwnProperty('B')) {
                         if (name == '') {
                             demo = a
@@ -341,18 +396,18 @@
                         }
                         a = {}
                         obj = {}
-                        name = item.A
+                        name = itemA
                     } else {
                         if (strType.indexOf(item.B) > -1) {
-                            a[item.A] = ''
+                            a[itemA] = ''
                         } else if (numType.indexOf(item.B) > -1) {
-                            a[item.A] = 0
+                            a[itemA] = 0
                         } else if (boolType.indexOf(item.B) > -1) {
-                            a[item.A] = true
+                            a[itemA] = true
                         } else if (item.B.indexOf('List') > -1 || item.B.indexOf('list') > -1 || item.B.indexOf('jsonArray') > -1) {
-                            a[item.A] = []
+                            a[itemA] = []
                         } else if (item.B.indexOf('json') > -1 || item.B.indexOf('Json') > -1) {
-                            a[item.A] = {}
+                            a[itemA] = {}
                         }
                     }
                 }
@@ -376,7 +431,8 @@
             var paramsArr = []
             var name = ''
             arr.forEach(item => {
-                if (myReg.test(item.A)) {
+                let itemA = item.A.replace(' ', '');
+                if (myReg.test(itemA)) {
                     if (!item.hasOwnProperty('B')) {
                         if (name == '') {
                             paramsArr = JSON.parse(JSON.stringify(b))
@@ -390,14 +446,14 @@
                                 }
                             })
                         }
-                        name = item.A
+                        name = itemA
                         a = []
                         b = []
                     } else {
                         if (name == '') {
-                            a.push({name:item.A,type:item.C == "必选" ? "1" : "0",desc:item.D})
+                            a.push({name:itemA,type:item.C == "必选" ? "1" : "0",desc:item.D})
                         }
-                        b.push({name:item.A,type:item.B,isMust:item.C == "必选" ? "1" : "0",desc:item.D})
+                        b.push({name:itemA,type:item.B,isMust:item.C == "必选" ? "1" : "0",desc:item.D})
                     }
                 }
             })
@@ -430,9 +486,10 @@
                 urlAddon: ''
             }
             arr.forEach(item => {
-                if(apiNameArr.indexOf(item.A) > 0 && item.B){
-                    params[apiTitleArr[apiNameArr.indexOf(item.A)]] = item.B
-                } else if (apiNameArr.indexOf(item.A) == 0 && item.B) {
+                let itemA = item.A.replace(' ', '');
+                if(apiNameArr.indexOf(itemA) > 0 && item.B){
+                    params[apiTitleArr[apiNameArr.indexOf(itemA)]] = item.B
+                } else if (apiNameArr.indexOf(itemA) == 0 && item.B) {
                     params['httpType'] = []
                     var obj = JSON.parse(JSON.stringify(item))
                     delete obj.A
@@ -505,7 +562,7 @@
                                 arrayData.push(arr[i])
                             }
                         }else{
-                            let arrayTotals = !!curDome[item.name].length ? str : Random.int(1, 10); //随机生成1-50条数据条数
+                            let arrayTotals = str && !!curDome[item.name].length ? str : Random.int(1, 5); //随机生成1-50条数据条数
                             for(let i = 0;i<arrayTotals;i++){
                                 let arrayString = Mock.mock("@ctitle");
                                 arrayData.push(arrayString);
@@ -532,7 +589,7 @@
                     
                     function getTotals(curDome){
                         let jsonArrayLength = Array.isArray(curDome) ? Array.isArray(curDome.slice(-1)) ? curDome.slice(-1)[0] : {}: {};
-                        let totals = typeof(jsonArrayLength) != 'object'? jsonArrayLength : Random.int(1, 10); //随机生成1-20条数据条数
+                        let totals = (jsonArrayLength && typeof(jsonArrayLength) != 'object')? jsonArrayLength : Random.int(1, 5); //随机生成1-20条数据条数
                         return totals;
                     }
                 }
@@ -582,6 +639,7 @@
                 SheetNames.push(item.apiHead.name)
             })
             apiData2Mock(apiData)
+            console.log('apiData',apiData.length)
             var ajaxUrl = '';
             ajaxUrl = '<%=config.siteUrl+config.managerPath%>apis/import'
             $.ajax({

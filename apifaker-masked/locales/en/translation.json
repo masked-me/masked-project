@@ -10,6 +10,7 @@
   "add": "Add",
   "edit": "Edit",
   "submit": "Submit",
+  "transform": "Transform",
   "search": "Search",
   "searchApi": "Api Search",
   "clickToRemove": "Click To Remove",
@@ -22,7 +23,8 @@
   "menus": {
     "list": "Api List",
     "add": "Add Api",
-    "import": "Import Api"
+    "import": "Import Api",
+    "transform": "Transform Api"
   },
   "types": {
     "string": "String",
@@ -83,6 +85,8 @@
     "requireResultField": "Please fill all results field",
     "requireParamField": "Please fill all params field",
     "jsonFormatErr": "Format JSON data error",
+    "yamlFormatErr": "Format YAML data error",
+    "wordFormatErr": "Format WORD data error",
     "moveLeftToRight": "Sync Left To Right",
     "moveRightToLeft": "Sync Right To Left",
     "noData": "No Data",

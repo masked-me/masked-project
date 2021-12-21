@@ -1,17 +1,14 @@
 {
-  "name": "apifaker",
-  "author": "hylin <admin@hylin.org>",
-  "homepage": "http://apifaker.com/",
+  "name": "scpmock",
+  "author": "masked",
   "version": "0.0.1",
-  "description": "A useful tool for front-end engineer to fake a api",
-  "main": "apifaker.js",
+  "main": "scpmock.js",
   "private": true,
   "scripts": {
-    "dev": "node ./apifaker.js"
+    "dev": "node ./scpmock.js"
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/hylin/apifaker"
+    "type": "git"
   },
   "license": "Apache License 2.0",
   "dependencies": {
@@ -21,34 +18,24 @@
     "express": "4.1.1",
     "i18next": "1.7.4",
     "lodash": "^4.17.21",
+    "mkdirp": "^1.0.4",
     "mockjs": "^1.1.0",
     "nedb": "0.10.5",
     "request": "2.34.0",
     "serve-favicon": "2.0.0"
   },
   "devDependencies": {
+    "adm-zip": "^0.5.9",
     "express": "^4.17.1",
     "jsoneditor": "^9.5.7",
+    "multer": "^1.4.3",
+    "node-xlsx": "^0.17.2",
     "pkg": "^5.4.1",
     "should": "^3.3.1",
-    "supertest": "^0.12.1"
+    "silly-datetime": "^0.1.2",
+    "supertest": "^0.12.1",
+    "xlsx": "^0.17.4",
+    "xlsx-style": "^0.8.13"
   },
-  "bin": "apifaker.js",
-  "pkg": {
-    "assets": [
-      "./views/*",
-      "./views/**/*",
-      "./node_modules/*",
-      "./node_modules/**/*",
-      "./node_modules/**/**/*",
-      "./node_modules/**/**/**/*",
-      "./controllers/*",
-      "./data/*",
-      "./lib/*",
-      "./locales/**/*.json",
-      "./public/assets/**/*",
-      "./public/assets/**/**/*",
-      "./config.js"
-    ]
-  }
+  "bin": "scpmock.js"
 }

@@ -99,17 +99,17 @@
                             if(v.obj){
                         %>    
                         <tr>
-                            <td><%=v.name%></td>
-                            <td><%=v.type%></td>
+                            <td><%=v.name || '-'%></td>
+                            <td><%=v.type || '-'%></td>
                             <td class="tr-red">属性详解见下方</td>
                         </tr>
                         <%        
                             } else {
                         %>
                             <tr>
-                                <td><%=v.name%></td>
-                                <td><%=v.type%></td>
-                                <td><%=v.desc%></td>
+                                <td><%=v.name|| '-'%></td>
+                                <td><%=v.type|| '-'%></td>
+                                <td><%=v.desc|| '-'%></td>
                             </tr>
                             
                         <%        
@@ -154,9 +154,9 @@
                             <td>--</td>
                         </tr>
                         <tr class="tr-red">
-                            <td><%=v.name%></td>
-                            <td><%=v.type%></td>
-                            <td><%=v.desc%></td>
+                            <td><%=v.name|| '-'%></td>
+                            <td><%=v.type|| '-'%></td>
+                            <td><%=v.desc|| '-'%></td>
                         </tr>
                             <%
                             v.obj.forEach(function(i){
@@ -166,17 +166,17 @@
                             if(i.obj){
                         %>    
                         <tr>
-                            <td><%=i.name%></td>
-                            <td><%=v.type%></td>
-                            <td><%=v.desc%></td>
+                            <td><%=i.name|| '-'%></td>
+                            <td><%=v.type|| '-'%></td>
+                            <td><%=v.desc|| '-'%></td>
                         </tr>
                         <%        
                             } else {
                         %>
                             <tr>
-                                <td><%=i.name%></td>
-                                <td><%=i.type%></td>
-                                <td><%=i.desc%></td>
+                                <td><%=i.name|| '-'%></td>
+                                <td><%=i.type|| '-'%></td>
+                                <td><%=i.desc|| '-'%></td>
                             </tr>
                             
                         <%        

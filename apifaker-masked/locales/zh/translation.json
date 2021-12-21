@@ -10,6 +10,7 @@
   "add": "添加",
   "edit": "修改",
   "submit": "提交",
+  "transform": "转换",
   "search": "搜索",
   "searchApi": "搜索接口",
   "clickToRemove": "点击移除该行",
@@ -22,7 +23,8 @@
   "menus": {
     "list": "接口列表",
     "add": "添加接口",
-    "import": "导入接口"
+    "import": "导入接口",
+    "transform": "文件转换"
   },
   "types": {
     "string": "字符串",
@@ -102,6 +104,8 @@
     "requireResultField": "有返回结果属性名或属性说明未填写，请检查",
     "requireParamField": "有参数名或参数说明未填写，请检查",
     "jsonFormatErr": "解析json格式发生错误",
+    "yamlFormatErr": "解析yaml格式发生错误",
+    "wordFormatErr": "解析word格式发生错误",
     "moveLeftToRight": "将 [左侧] 内容同步到 [右侧] ",
     "moveRightToLeft": "将 [右侧] 内容同步到 [左侧]",
     "noData": "没有数据",
@@ -134,6 +138,7 @@
     "mark": "给模拟数据取个名字吧",
     "downloadExcel": "请按照excel模板添加接口数据内容",
     "importfile": "请上传接口文件",
+    "importyamlfile": "请选择word或yaml类型接口文件",
     "isCover": "如果上传文件中的接口已存在，选择覆盖则会覆盖原来的接口及模拟数据，选择添加则会只添加模拟数据"
   }
 }

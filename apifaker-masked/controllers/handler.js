@@ -1,5 +1,5 @@
 /*!
- * ApiFaker is a simulator that help developers to improve efficiency in development,
+ * SCPMock is a simulator that help developers to improve efficiency in development,
  * especially for front-end engineers.
  * Lets define api and run it yourself.
  *
@@ -52,7 +52,8 @@ router.route('/robots.txt')
 */
 router.route('*')
  .all(function (req, res, next) {
-   var protocol = req.protocol,
+    res.header('Access-Control-Allow-Origin', '*'); // * 这个表示任意域名都可以访问，这样写不能携带cookie了 || 'http://localhost:5080'
+     var protocol = req.protocol,
      host = protocol+ '://' +req.get('host'),
      path = req.path,
      uri = req.protocol+'://'+req.get('host')+req.originalUrl,
